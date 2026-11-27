@@ -24,20 +24,17 @@ export function Process() {
         <p>AI assistants sit in the toolbox next to the debugger and the profiler. Design decisions stay with me.</p>
       </div>
 
-      <ol className="steps">
-        {STAGES.map((s, i) => (
+      <ul className="steps">
+        {STAGES.map((s) => (
           <li key={s.step}>
-            <span className="step-no mono">{String(i + 1).padStart(2, '0')}</span>
-            <div className="step-body">
-              <h3 className="step-name">{s.step}</h3>
-              <p className="step-what">{s.what}</p>
-              <pre className="step-run mono">
-                <code>{s.run.map((c) => `$ ${c}`).join('\n')}</code>
-              </pre>
-            </div>
+            <h3 className="step-name">{s.step}</h3>
+            <p className="step-what">{s.what}</p>
+            <pre className="step-run mono">
+              <code>{s.run.map((c) => `$ ${c}`).join('\n')}</code>
+            </pre>
           </li>
         ))}
-      </ol>
+      </ul>
     </div>
   )
 }

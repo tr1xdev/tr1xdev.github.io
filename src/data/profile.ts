@@ -30,14 +30,6 @@ export const profile = {
   portrait: '',
 }
 
-/** Quick facts under the hero. */
-export const specs = [
-  { key: 'core', value: 'Go · Rust' },
-  { key: 'wire', value: 'gRPC · Kafka' },
-  { key: 'storage', value: 'Postgres · Redis' },
-  { key: 'based in', value: 'Moscow · UTC+3' },
-]
-
 export const about = {
   statement: 'I like the parts of a system nobody sees: protocols, queues, storage and the failure modes between them.',
   body: 'Most of my time goes into services in Go and Rust; the rest goes into low-level side projects and ML experiments. I care about contracts first, measurable performance and code that the next person can read.',

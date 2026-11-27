@@ -22,23 +22,13 @@
 
 .steps li {
   display: grid;
-  grid-template-columns: 48px minmax(0, 1fr);
-  gap: 16px;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 6px 24px;
   padding: 22px 0;
   border-top: 1px solid var(--line-2);
 }
 .steps li:last-child {
   border-bottom: 1px solid var(--line-2);
-}
-.step-no {
-  padding-top: 6px;
-  font-size: 12px;
-  color: var(--ink-3);
-}
-.step-body {
-  display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-  gap: 6px 24px;
 }
 .step-name {
   grid-column: 1;
@@ -71,9 +61,6 @@
 }
 @media (max-width: 640px) {
   .steps li {
-    grid-template-columns: 32px minmax(0, 1fr);
-  }
-  .step-body {
     grid-template-columns: minmax(0, 1fr);
   }
   .step-run {

@@ -24,16 +24,6 @@
   border-bottom: 1px solid var(--line);
   background: #0d0d10;
 }
-.wk-fig {
-  position: absolute;
-  top: 12px;
-  left: 14px;
-  padding: 3px 8px;
-  border-radius: var(--radius-sm);
-  background: rgba(10, 10, 11, 0.7);
-  font-size: 11px;
-  color: var(--ink-2);
-}
 
 .wk-body {
   display: flex;

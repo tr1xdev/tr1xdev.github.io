@@ -47,7 +47,7 @@ All content lives in [`src/data/profile.ts`](src/data/profile.ts):
 | --- | --- |
 | `profile` | Handle, role, one-line pitch, availability pill, time zone, links. `email` and `telegram` stay hidden while empty. |
 | `profile.portrait` | Optional path to a photo in `public/`. It is dithered in the browser to match the site. |
-| `specs`, `about` | Quick facts under the hero and the About section. |
+| `about` | Statement, focus list and details in the About section. |
 | `featured` | Hand-picked repositories for "Selected work"; `cover` picks the dither artwork. |
 | `pins`, `groups` | The skills chip. |
 

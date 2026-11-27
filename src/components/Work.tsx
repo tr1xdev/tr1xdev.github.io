@@ -50,7 +50,6 @@ function ProjectCard({ project, repo, index, loading }: { project: Featured; rep
       >
         <span className="wk-cover">
           <DitherCanvas field={patterns[project.cover]} fill={lead} play={active} startAt={index * 3 + 1} />
-          <span className="wk-fig mono">fig. {String(index + 1).padStart(2, '0')}</span>
         </span>
         <span className="wk-body">
           <span className="wk-top mono">

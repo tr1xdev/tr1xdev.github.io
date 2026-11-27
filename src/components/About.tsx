@@ -23,7 +23,7 @@ function usePortraitField(): Field {
 
 export function About() {
   const field = usePortraitField()
-  const [ref, inView] = useInView<HTMLElement>()
+  const [ref, inView] = useInView<HTMLDivElement>()
 
   return (
     <div className="about">
@@ -32,7 +32,7 @@ export function About() {
         <p className="about-body">{about.body}</p>
       </div>
 
-      <figure className="about-visual" ref={ref}>
+      <div className="about-visual" ref={ref}>
         <DitherCanvas
           field={field}
           aspect={1}
@@ -40,11 +40,7 @@ export function About() {
           startAt={2}
           label={profile.portrait ? `Portrait of ${profile.handle}` : undefined}
         />
-        <figcaption className="mono">
-          <span>{profile.partNo}</span>
-          <span>systems core</span>
-        </figcaption>
-      </figure>
+      </div>
 
       <div className="about-col">
         <h3 className="label mono">Focus</h3>
