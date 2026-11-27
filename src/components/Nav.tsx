@@ -74,7 +74,7 @@ export function Nav({ active, onGo, onPalette }: Props) {
               go('contact')
             }}
           >
-            Hire me
+            Contact
           </a>
           <button
             type="button"

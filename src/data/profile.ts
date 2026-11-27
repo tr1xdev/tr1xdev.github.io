@@ -8,7 +8,7 @@ export const profile = {
   partNo: 'TRX-01',
   role: 'Backend & systems developer',
   /** One line under the name. Keep it under ~140 characters. */
-  lede: 'I build services that talk over the network, data that has to stay correct, and tools that make the rest of the stack faster.',
+  lede: 'I build backend services in Go and Rust: APIs, message pipelines and the storage underneath them.',
   /** Plain text in the hero and in About. Empty string hides it. */
   availability: 'Open to backend roles and projects',
   githubUser: 'tr1xdev',
@@ -18,9 +18,9 @@ export const profile = {
   location: 'Moscow',
   links: {
     github: 'https://github.com/tr1xdev',
-    // Optional — leave empty to hide. e.g. 'hello@example.com'
+    // Optional. Leave empty to hide, e.g. 'hello@example.com'
     email: '',
-    // Optional — leave empty to hide. e.g. 'https://t.me/yourname'
+    // Optional. Leave empty to hide, e.g. 'https://t.me/yourname'
     telegram: '',
   },
   /**
