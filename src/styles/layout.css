@@ -235,57 +235,11 @@
   margin-left: auto;
 }
 
-/* ── status bar ── */
-.statusbar {
-  position: fixed;
-  inset: auto 0 0;
-  z-index: 40;
-  display: flex;
-  align-items: stretch;
-  height: var(--bar);
-  border-top: 1px solid var(--line);
-  background: rgba(10, 10, 11, 0.82);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  font-size: 11.5px;
-  color: var(--ink-2);
-}
-.sb-item {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 0 14px;
-  border-right: 1px solid var(--line);
-  white-space: nowrap;
-}
-.sb-k {
-  color: var(--ink-3);
-}
-.sb-online {
-  color: var(--live-ink);
-}
-.sb-cmd {
-  margin-left: auto;
-  border: 0;
-  border-left: 1px solid var(--line);
-  background: none;
-  font-family: var(--mono);
-  font-size: 11.5px;
-  color: var(--ink-2);
-  cursor: pointer;
-}
-.sb-cmd:hover {
-  color: var(--ink);
-}
-.sb-cmd kbd {
-  font-size: 10.5px;
-}
-
 /* ── toast ── */
 .toast {
   position: fixed;
   left: 50%;
-  bottom: calc(var(--bar) + 16px);
+  bottom: 24px;
   z-index: 60;
   padding: 10px 16px;
   border-radius: 999px;
@@ -334,7 +288,6 @@
 }
 @media (max-width: 640px) {
   .cmd-btn,
-  .sb-hide-sm,
   .colophon-kbd {
     display: none;
   }

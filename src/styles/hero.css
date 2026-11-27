@@ -27,7 +27,9 @@
   font-size: 12px;
   color: var(--ink-2);
 }
-.hero-meta .sep {
+.hero-eyebrow > span + span::before {
+  content: '/';
+  margin-right: 16px;
   color: var(--ink-3);
 }
 

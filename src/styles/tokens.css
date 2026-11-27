@@ -18,8 +18,6 @@
   --accent-hover: #ff6f3c;
   --accent-ink: #ff8552; /* accent for small text, AA on --bg */
   --on-accent: #140a05;
-  --live: #3ddc84;
-  --live-ink: #8ff0b9;
 
   --g-lang: var(--accent);
   --g-arch: #7aa2ff;
@@ -34,7 +32,6 @@
   --wrap: 1240px;
   --gutter: clamp(20px, 4vw, 40px);
   --topbar: 64px;
-  --bar: 32px;
   --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 

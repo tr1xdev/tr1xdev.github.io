@@ -130,7 +130,7 @@ export function Process() {
             workflow <span className="term-sep">/</span> {step}
           </span>
           <span className="term-rec">
-            <span className="led" /> {String(stage + 1).padStart(2, '0')}/{String(STAGES.length).padStart(2, '0')}
+{String(stage + 1).padStart(2, '0')}/{String(STAGES.length).padStart(2, '0')}
           </span>
         </div>
         <div className="term-body mono" aria-hidden="true">

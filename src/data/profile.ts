@@ -9,7 +9,7 @@ export const profile = {
   role: 'Backend & systems developer',
   /** One line under the name. Keep it under ~140 characters. */
   lede: 'I build services that talk over the network, data that has to stay correct, and tools that make the rest of the stack faster.',
-  /** Shown as a green status pill in the hero and the contact section. Empty string hides it. */
+  /** Plain text in the hero and in About. Empty string hides it. */
   availability: 'Open to backend roles and projects',
   githubUser: 'tr1xdev',
   site: 'https://tr1xdev.github.io',

@@ -11,7 +11,6 @@ import { Pinout } from './components/Pinout'
 import { Process } from './components/Process'
 import { Section } from './components/Section'
 import { Stats } from './components/Stats'
-import { StatusBar } from './components/StatusBar'
 import { Work } from './components/Work'
 import { isMac, prefersReducedMotion, useActiveSection, useRevealOnScroll } from './hooks'
 
@@ -89,8 +88,6 @@ export default function App() {
     ]
   }, [copy, go])
 
-  const current = sections.find((s) => s.id === active)
-
   return (
     <>
       <DitherBackground />
@@ -138,7 +135,6 @@ export default function App() {
         </Section>
       </main>
 
-      <StatusBar section={current ? `${current.no} ${current.label.toLowerCase()}` : '00 top'} onPalette={() => setPalette(true)} />
       <CommandPalette open={palette} onClose={() => setPalette(false)} commands={commands} />
       <div className={`toast mono${toast ? ' is-on' : ''}`} role="status" aria-live="polite">
         {toast}

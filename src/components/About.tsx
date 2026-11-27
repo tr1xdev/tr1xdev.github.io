@@ -77,9 +77,7 @@ export function About() {
           {profile.availability && (
             <div>
               <dt className="mono">status</dt>
-              <dd className="dd-live">
-                <span className="led" aria-hidden="true" /> {profile.availability}
-              </dd>
+              <dd>{profile.availability}</dd>
             </div>
           )}
         </dl>

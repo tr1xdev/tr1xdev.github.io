@@ -10,12 +10,6 @@ export function Contact({ onCopy }: { onCopy: (text: string, label: string) => v
     <div className="contact card" ref={ref} data-reveal>
       <DitherCanvas field={horizon} width={240} height={110} play={inView} startAt={0.5} className="contact-art" />
       <div className="contact-in">
-        {profile.availability && (
-          <p className="pill pill-live mono">
-            <span className="led" aria-hidden="true" />
-            {profile.availability}
-          </p>
-        )}
         <p className="contact-title">
           Let’s build something that holds up <em>under load.</em>
         </p>

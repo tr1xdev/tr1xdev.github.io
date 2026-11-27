@@ -11,14 +11,9 @@ export function Hero({ onGo }: { onGo: (id: string) => void }) {
     <section className="hero" id="top" aria-label="Intro">
       <div className="wrap hero-in">
         <p className="hero-eyebrow mono">
-          {profile.availability && (
-            <span className="pill pill-live">
-              <span className="led" aria-hidden="true" />
-              {profile.availability}
-            </span>
-          )}
-          <span className="hero-meta">
-            {profile.location} <span className="sep">/</span> <time>{time}</time> local
+          {profile.availability && <span>{profile.availability}</span>}
+          <span>
+            {profile.location}, <time>{time}</time> local time
           </span>
         </p>
 
