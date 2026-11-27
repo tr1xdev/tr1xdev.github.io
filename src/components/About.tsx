@@ -3,7 +3,7 @@ import { about, profile } from '../data/profile'
 import { DitherCanvas } from '../dither/DitherCanvas'
 import { imageField, orb } from '../dither/patterns'
 import type { Field } from '../dither/paint'
-import { useInView } from '../hooks'
+import { useClock, useInView } from '../hooks'
 
 /** Resolution the portrait is sampled at before dithering. */
 const SAMPLE = 200
@@ -23,6 +23,7 @@ function usePortraitField(): Field {
 
 export function About() {
   const field = usePortraitField()
+  const { offset } = useClock(profile.timezone)
   const [ref, inView] = useInView<HTMLDivElement>()
 
   return (
@@ -60,10 +61,12 @@ export function About() {
               <dd>{profile.location}</dd>
             </div>
           )}
-          <div>
-            <dt>Time zone</dt>
-            <dd>{profile.tzLabel}</dd>
-          </div>
+          {offset && (
+            <div>
+              <dt>Time zone</dt>
+              <dd>{offset}</dd>
+            </div>
+          )}
           <div>
             <dt>Role</dt>
             <dd>{profile.role}</dd>

@@ -5,16 +5,24 @@ import type { PatternName } from '../dither/patterns'
 
 export const profile = {
   handle: 'tr1xdev',
+  /** The hero name in two parts: solid, then outlined. Use ['yourname', ''] for one solid word. */
+  wordmark: ['tr1x', 'dev'],
+  /** Printed on the chip in the Stack section. */
   partNo: 'TRX-01',
   role: 'Backend & systems developer',
-  /** One line under the name. Keep it under ~140 characters. */
+  /** One line under the name, also used as the page description. Keep it under ~140 characters. */
   lede: 'I build backend services in Go and Rust: APIs, message pipelines and the storage underneath them.',
-  /** Plain text in the hero and in About. Empty string hides it. */
+  /** Plain text in About and Contact. Empty string hides it. */
   availability: 'Open to backend roles and projects',
   githubUser: 'tr1xdev',
   site: 'https://tr1xdev.github.io',
+  /**
+   * Optional. An IANA time zone such as 'Europe/Lisbon' or 'America/Chicago'. When set, the hero
+   * shows your local time and About shows the UTC offset; the browser works both out, so they stay
+   * right when daylight saving time starts or ends. Leave empty to hide both.
+   */
   timezone: 'Europe/Moscow',
-  tzLabel: 'MSK · UTC+3',
+  /** Optional city or region. Leave empty to hide it. */
   location: 'Moscow',
   links: {
     github: 'https://github.com/tr1xdev',

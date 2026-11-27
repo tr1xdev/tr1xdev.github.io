@@ -41,18 +41,41 @@ npm run preview    # serve dist/
 
 ## Make it yours
 
-All content lives in [`src/data/profile.ts`](src/data/profile.ts):
+All content lives in [`src/data/profile.ts`](src/data/profile.ts). The page title, description,
+social card text and structured data in `index.html` are filled in from the same file at build time.
 
 | Field | What it does |
 | --- | --- |
-| `profile` | Handle, role, one-line pitch, availability pill, time zone, links. `email` and `telegram` stay hidden while empty. |
+| `profile` | Handle, wordmark, role, one-line lede, availability and links. `email` and `telegram` stay hidden while empty. |
+| `profile.timezone`, `profile.location` | Optional. See below. |
 | `profile.portrait` | Optional path to a photo in `public/`. It is dithered in the browser to match the site. |
 | `about` | Statement, focus list and details in the About section. |
 | `featured` | Hand-picked repositories for "Selected work"; `cover` picks the dither artwork. |
 | `pins`, `groups` | The skills chip. |
 
-Colours live in [`src/styles/tokens.css`](src/styles/tokens.css) and, for the dither, in
+Replace `public/og.png` (1200×630) with your own social preview. Colours live in
+[`src/styles/tokens.css`](src/styles/tokens.css) and, for the dither, in
 [`src/dither/palette.ts`](src/dither/palette.ts).
+
+### Time zone and location
+
+Both are optional, and a fork should start with them empty:
+
+```ts
+timezone: '', // e.g. 'Europe/Lisbon'. Empty hides the local time and the UTC offset.
+location: '', // e.g. 'Lisbon'. Empty hides it.
+```
+
+This copy shows Moscow only because it is my own site. Neither field is needed:
+
+- A portfolio works without them. They help when people in other time zones want to know when you
+  are likely to answer, nothing more.
+- A city written into a template ends up on every fork until its owner notices.
+- A fixed label such as "UTC+1" is wrong for half the year wherever clocks change for summer. The
+  site takes an IANA zone name and lets the browser work out the local time and the current offset,
+  so `Europe/Berlin` shows UTC+1 in winter and UTC+2 in summer without edits.
+- Some people would rather not publish their city. Set only `timezone` to show the time without a
+  place, or leave both empty.
 
 ## Reusing the dither
 

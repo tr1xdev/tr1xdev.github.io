@@ -59,25 +59,53 @@ export function useActiveSection(ids: readonly string[]) {
   return active
 }
 
-/** Current time in a given IANA zone, ticking every second. */
-export function useClock(timeZone: string, withSeconds = false) {
+/** True when `timeZone` is an IANA zone name this browser knows, e.g. 'Europe/Lisbon'. */
+export function isTimeZone(timeZone: string) {
+  if (!timeZone) return false
+  try {
+    new Intl.DateTimeFormat('en', { timeZone })
+    return true
+  } catch {
+    return false
+  }
+}
+
+/** The offset from UTC in `timeZone` at `at`, e.g. 'UTC+3', 'UTC-4' or 'UTC+5:30'. Empty if unknown. */
+export function utcOffset(timeZone: string, at = new Date()) {
+  if (!isTimeZone(timeZone)) return ''
+  try {
+    const name = new Intl.DateTimeFormat('en-US', { timeZone, timeZoneName: 'shortOffset' })
+      .formatToParts(at)
+      .find((p) => p.type === 'timeZoneName')?.value
+    return name ? name.replace('GMT', 'UTC') : ''
+  } catch {
+    return ''
+  }
+}
+
+/**
+ * Local time (HH:MM) and UTC offset in `timeZone`, updated on the minute.
+ * Both are empty strings when the zone is empty or unknown.
+ */
+export function useClock(timeZone: string) {
+  const valid = isTimeZone(timeZone)
   const [now, setNow] = useState(() => new Date())
   useEffect(() => {
-    const t = window.setInterval(() => setNow(new Date()), 1000)
-    return () => window.clearInterval(t)
-  }, [])
+    if (!valid) return
+    let t = 0
+    const next = () => 60_000 - (Date.now() % 60_000) + 50
+    const tick = () => {
+      setNow(new Date())
+      t = window.setTimeout(tick, next())
+    }
+    t = window.setTimeout(tick, next())
+    return () => window.clearTimeout(t)
+  }, [valid])
   const fmt = useMemo(
-    () =>
-      new Intl.DateTimeFormat('en-GB', {
-        timeZone,
-        hour: '2-digit',
-        minute: '2-digit',
-        ...(withSeconds ? { second: '2-digit' } : {}),
-        hour12: false,
-      }),
-    [timeZone, withSeconds],
+    () => (valid ? new Intl.DateTimeFormat('en-GB', { timeZone, hour: '2-digit', minute: '2-digit', hour12: false }) : null),
+    [timeZone, valid],
   )
-  return fmt.format(now)
+  return { time: fmt ? fmt.format(now) : '', offset: valid ? utcOffset(timeZone, now) : '' }
 }
 
 export const isMac = typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.userAgent)

@@ -2,13 +2,15 @@ import { profile } from '../data/profile'
 import { useClock } from '../hooks'
 
 export function Hero({ onGo }: { onGo: (id: string) => void }) {
-  const time = useClock(profile.timezone)
+  const { time, offset } = useClock(profile.timezone)
+  const [solid, outlined] = profile.wordmark
 
   return (
     <section className="hero" id="top" aria-label="Intro">
       <div className="wrap hero-in">
         <h1 className="hero-name">
-          tr1x<span className="hero-name-dim">dev</span>
+          {solid}
+          {outlined && <span className="hero-name-dim">{outlined}</span>}
         </h1>
 
         <p className="hero-role">{profile.role}</p>
@@ -23,9 +25,17 @@ export function Hero({ onGo }: { onGo: (id: string) => void }) {
           </a>
         </div>
 
-        <p className="hero-meta mono">
-          {profile.location}, <time>{time}</time> local time
-        </p>
+        {(profile.location || time) && (
+          <p className="hero-meta mono">
+            {profile.location}
+            {profile.location && time && ', '}
+            {time && (
+              <>
+                <time>{time}</time> local time ({offset})
+              </>
+            )}
+          </p>
+        )}
       </div>
     </section>
   )

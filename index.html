@@ -3,42 +3,31 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>tr1xdev · Backend & systems developer</title>
-    <meta name="description" content="tr1xdev, backend and systems developer in Moscow. Go and Rust services, gRPC and Kafka on the wire, PostgreSQL underneath." />
+    <!-- %PROFILE_*% values come from src/data/profile.ts at build time (see vite.config.ts). -->
+    <title>%PROFILE_TITLE%</title>
+    <meta name="description" content="%PROFILE_DESCRIPTION%" />
     <meta name="color-scheme" content="dark" />
     <meta name="theme-color" content="#0a0a0b" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="canonical" href="https://tr1xdev.github.io/" />
+    <link rel="canonical" href="%PROFILE_SITE%/" />
 
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://tr1xdev.github.io/" />
-    <meta property="og:title" content="tr1xdev · Backend & systems developer" />
-    <meta property="og:description" content="Go and Rust services, gRPC and Kafka on the wire, PostgreSQL underneath. Open to backend roles and projects." />
-    <meta property="og:image" content="https://tr1xdev.github.io/og.png" />
+    <meta property="og:url" content="%PROFILE_SITE%/" />
+    <meta property="og:title" content="%PROFILE_TITLE%" />
+    <meta property="og:description" content="%PROFILE_DESCRIPTION%" />
+    <meta property="og:image" content="%PROFILE_SITE%/og.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="tr1xdev, backend and systems developer, over a dithered orange and grey background" />
+    <meta property="og:image:alt" content="%PROFILE_IMAGE_ALT%" />
     <meta name="twitter:card" content="summary_large_image" />
 
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Person",
-        "name": "tr1xdev",
-        "alternateName": "tr1x",
-        "jobTitle": "Backend & systems developer",
-        "url": "https://tr1xdev.github.io/",
-        "sameAs": ["https://github.com/tr1xdev"],
-        "homeLocation": { "@type": "Place", "name": "Moscow" },
-        "knowsAbout": ["Go", "Rust", "gRPC", "Kafka", "PostgreSQL", "Redis", "Distributed systems"]
-      }
-    </script>
+    <script type="application/ld+json">%PROFILE_PERSON%</script>
   </head>
   <body>
     <noscript>
       <p style="padding: 24px; font-family: system-ui, sans-serif; color: #f2f0eb; background: #0a0a0b">
         This portfolio needs JavaScript. You can find the same projects on
-        <a href="https://github.com/tr1xdev" style="color: #ff8552">github.com/tr1xdev</a>.
+        <a href="%PROFILE_GITHUB%" style="color: #ff8552">github.com/%PROFILE_GITHUB_USER%</a>.
       </p>
     </noscript>
     <div id="root"></div>

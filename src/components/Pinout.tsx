@@ -51,7 +51,7 @@ export function Pinout() {
             SYSTEMS CORE
           </text>
           <text x={W / 2} y={318} className="ic-sub muted" textAnchor="middle">
-            {profile.handle} · 2026
+            {profile.handle} · {new Date().getFullYear()}
           </text>
 
           {pins.map((p, i) => {

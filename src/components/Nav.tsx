@@ -56,7 +56,8 @@ export function Nav({ active, onGo, onPalette }: Props) {
         >
           <span className="brand-mark" aria-hidden="true" />
           <span className="brand-name">
-            tr1x<span>/dev</span>
+            {profile.wordmark[0]}
+            {profile.wordmark[1] && <span>/{profile.wordmark[1]}</span>}
           </span>
         </a>
         <nav className="nav mono" aria-label="Sections">
