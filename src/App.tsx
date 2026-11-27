@@ -12,7 +12,7 @@ import { Process } from './components/Process'
 import { Section } from './components/Section'
 import { Stats } from './components/Stats'
 import { Work } from './components/Work'
-import { isMac, prefersReducedMotion, useActiveSection, useRevealOnScroll } from './hooks'
+import { isMac, prefersReducedMotion, useActiveSection } from './hooks'
 
 const ids = sections.map((s) => s.id)
 
@@ -21,7 +21,6 @@ export default function App() {
   const [toast, setToast] = useState<string | null>(null)
   const toastTimer = useRef(0)
   const active = useActiveSection(ids)
-  useRevealOnScroll()
 
   const notify = useCallback((msg: string) => {
     setToast(msg)

@@ -149,25 +149,6 @@ kbd {
   image-rendering: pixelated;
 }
 
-/* ── scramble text: the real text keeps its place, the glyphs are painted on top while it decodes ── */
-.scramble {
-  position: relative;
-  display: inline-block;
-  white-space: nowrap;
-}
-.scramble[data-live] {
-  -webkit-text-fill-color: transparent;
-  -webkit-text-stroke-color: transparent;
-}
-.scramble[data-live]::after {
-  content: attr(data-live);
-  content: attr(data-live) / '';
-  position: absolute;
-  inset: 0;
-  -webkit-text-fill-color: currentColor;
-  -webkit-text-stroke-color: var(--scramble-stroke, transparent);
-}
-
 /* ── primitives ── */
 .card {
   position: relative;
@@ -258,11 +239,6 @@ kbd {
 
 .arrow {
   display: inline-block;
-  transition: transform 0.25s var(--ease);
-}
-a:hover .arrow,
-a:focus-visible .arrow {
-  transform: translate(3px, -3px);
 }
 
 /* Language bars: flat colour with a dot screen on top, so they read as dithered too. */
@@ -291,17 +267,6 @@ a:focus-visible .arrow {
   border-radius: 3px;
 }
 
-/* ── reveal on scroll (only when JS has opted in) ── */
-[data-reveal] {
-  transition:
-    opacity 0.8s var(--ease),
-    transform 0.8s var(--ease);
-}
-.can-reveal [data-reveal]:not(.is-in) {
-  opacity: 0;
-  transform: translateY(20px);
-}
-
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -310,8 +275,5 @@ a:focus-visible .arrow {
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
-  }
-  .can-reveal [data-reveal]:not(.is-in) {
-    transform: none;
   }
 }

@@ -38,7 +38,7 @@ function ProjectCard({ project, repo, index, loading }: { project: Featured; rep
   const href = repo?.html_url ?? `${profile.links.github}/${project.repo}`
 
   return (
-    <li className={`wk${lead ? ' wk-lead' : ''}`} data-reveal>
+    <li className={`wk${lead ? ' wk-lead' : ''}`}>
       <a
         href={href}
         target="_blank"
@@ -98,7 +98,7 @@ export function Work() {
       </ol>
 
       {more.length > 0 && (
-        <div className="wk-more" data-reveal>
+        <div className="wk-more">
           <h3 className="card-label mono">More repositories</h3>
           <ul className="repo-list">
             {more.slice(0, MORE_LIMIT).map((r) => (

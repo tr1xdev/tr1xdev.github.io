@@ -7,7 +7,7 @@ export function Contact({ onCopy }: { onCopy: (text: string, label: string) => v
   const [ref, inView] = useInView<HTMLDivElement>({ rootMargin: '0px' })
 
   return (
-    <div className="contact card" ref={ref} data-reveal>
+    <div className="contact card" ref={ref}>
       <DitherCanvas field={horizon} width={240} height={110} play={inView} startAt={0.5} className="contact-art" />
       <div className="contact-in">
         <p className="contact-title">

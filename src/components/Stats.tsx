@@ -33,14 +33,14 @@ export function Stats() {
     <div className="stats">
       <dl className="tiles" aria-busy={state.status === 'loading'}>
         {tiles.map((t) => (
-          <div key={t.label} className="tile card" data-reveal>
+          <div key={t.label} className="tile card">
             <dt className="mono">{t.label}</dt>
             <dd>{t.value}</dd>
           </div>
         ))}
       </dl>
 
-      <figure className="card mix" data-reveal>
+      <figure className="card mix">
         <figcaption className="mix-head mono">
           <span>Language mix</span>
           <span>{basis}</span>

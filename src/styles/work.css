@@ -11,16 +11,11 @@
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: var(--surface);
-  transition:
-    border-color 0.3s,
-    transform 0.4s var(--ease),
-    box-shadow 0.4s var(--ease);
+  transition: border-color 0.2s;
 }
 .wk > a:hover,
 .wk > a:focus-visible {
   border-color: var(--line-3);
-  transform: translateY(-3px);
-  box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.9);
 }
 
 .wk-cover {

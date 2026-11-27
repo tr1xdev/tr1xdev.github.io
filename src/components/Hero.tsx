@@ -1,8 +1,5 @@
-import { pins, profile, specs } from '../data/profile'
+import { profile, specs } from '../data/profile'
 import { useClock } from '../hooks'
-import { Scramble } from './Scramble'
-
-const ticker = pins.map((p) => p.name)
 
 export function Hero({ onGo }: { onGo: (id: string) => void }) {
   const time = useClock(profile.timezone)
@@ -18,9 +15,8 @@ export function Hero({ onGo }: { onGo: (id: string) => void }) {
         </p>
 
         <h1 className="hero-name">
-          <Scramble text="tr1x" />
-          <Scramble text="dev" className="hero-name-dim" />
-          <span className="hero-caret" aria-hidden="true" />
+          tr1x<span className="hero-name-dim">dev</span>
+          <span className="hero-mark" aria-hidden="true" />
         </h1>
 
         <p className="hero-role">{profile.role}</p>
@@ -48,17 +44,6 @@ export function Hero({ onGo }: { onGo: (id: string) => void }) {
         </dl>
       </div>
 
-      <div className="ticker mono" aria-hidden="true">
-        <div className="ticker-track">
-          {[0, 1].map((copy) => (
-            <span key={copy} className="ticker-group">
-              {ticker.map((t) => (
-                <span key={t}>{t}</span>
-              ))}
-            </span>
-          ))}
-        </div>
-      </div>
     </section>
   )
 }

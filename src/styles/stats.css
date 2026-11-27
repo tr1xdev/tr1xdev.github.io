@@ -28,12 +28,6 @@
   letter-spacing: -0.045em;
   font-variant-numeric: tabular-nums;
 }
-.tiles > :nth-child(3n + 2) {
-  transition-delay: 0.06s;
-}
-.tiles > :nth-child(3n + 3) {
-  transition-delay: 0.12s;
-}
 
 .mix {
   display: grid;

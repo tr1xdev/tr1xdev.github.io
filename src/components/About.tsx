@@ -27,12 +27,12 @@ export function About() {
 
   return (
     <div className="bento about">
-      <article className="card about-statement" data-reveal>
+      <article className="card about-statement">
         <p className="about-big">{about.statement}</p>
         <p className="about-body">{about.body}</p>
       </article>
 
-      <figure className="card about-visual" ref={ref} data-reveal>
+      <figure className="card about-visual" ref={ref}>
         <DitherCanvas
           field={field}
           width={W}
@@ -47,7 +47,7 @@ export function About() {
         </figcaption>
       </figure>
 
-      <article className="card about-focus" data-reveal>
+      <article className="card about-focus">
         <h3 className="card-label mono">Focus</h3>
         <ol>
           {about.focus.map((f, i) => (
@@ -59,7 +59,7 @@ export function About() {
         </ol>
       </article>
 
-      <article className="card about-facts" data-reveal>
+      <article className="card about-facts">
         <h3 className="card-label mono">Quick facts</h3>
         <dl>
           <div>
