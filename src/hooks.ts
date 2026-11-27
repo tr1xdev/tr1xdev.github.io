@@ -45,23 +45,39 @@ export function useRevealOnScroll() {
     const root = document.documentElement
     if (!('IntersectionObserver' in window)) return
     root.classList.add('can-reveal')
+    const reveal = (el: Element) => {
+      el.classList.add('is-in')
+      io.unobserve(el)
+    }
     const io = new IntersectionObserver(
       (entries) => {
-        for (const e of entries) {
-          if (!e.isIntersecting) continue
-          e.target.classList.add('is-in')
-          io.unobserve(e.target)
-        }
+        // Reveal on entry, and anything already above the viewport (e.g. after opening /#contact).
+        for (const e of entries) if (e.isIntersecting || e.boundingClientRect.bottom < 0) reveal(e.target)
       },
       { rootMargin: '0px 0px -8% 0px' },
     )
-    const observe = () => document.querySelectorAll('[data-reveal]:not(.is-in)').forEach((el) => io.observe(el))
+    const pending = () => document.querySelectorAll('[data-reveal]:not(.is-in)')
+    const observe = () => pending().forEach((el) => io.observe(el))
     observe()
     const mo = new MutationObserver(observe)
     mo.observe(document.body, { childList: true, subtree: true })
+
+    // A fast jump (End key, scrollbar drag) can carry an element from below the viewport to above it
+    // between two observer checks, which never counts as intersecting. Sweep those up on scroll.
+    let raf = 0
+    const sweep = () => {
+      raf = 0
+      pending().forEach((el) => el.getBoundingClientRect().bottom < 0 && reveal(el))
+    }
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(sweep)
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
     return () => {
       io.disconnect()
       mo.disconnect()
+      window.removeEventListener('scroll', onScroll)
+      cancelAnimationFrame(raf)
       root.classList.remove('can-reveal')
     }
   }, [])
