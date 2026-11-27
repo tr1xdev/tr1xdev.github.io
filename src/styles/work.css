@@ -1,0 +1,202 @@
+.wk-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.wk > a {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  transition:
+    border-color 0.3s,
+    transform 0.4s var(--ease),
+    box-shadow 0.4s var(--ease);
+}
+.wk > a:hover,
+.wk > a:focus-visible {
+  border-color: var(--line-3);
+  transform: translateY(-3px);
+  box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.9);
+}
+
+.wk-cover {
+  position: relative;
+  display: block;
+  border-bottom: 1px solid var(--line);
+  background: #0d0d10;
+}
+.wk-fig {
+  position: absolute;
+  top: 12px;
+  left: 14px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgba(10, 10, 11, 0.7);
+  font-size: 11px;
+  color: var(--ink-2);
+}
+
+.wk-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 14px;
+  padding: 22px 24px 20px;
+}
+.wk-top {
+  display: flex;
+  gap: 10px;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-ink);
+}
+.wk-flag {
+  color: var(--ink-3);
+}
+.wk-title {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-size: clamp(28px, 2.8vw, 36px);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+.wk-title .arrow {
+  font-size: 0.7em;
+  color: var(--ink-3);
+}
+.wk > a:hover .wk-title .arrow {
+  color: var(--accent);
+}
+.wk-sum {
+  color: var(--ink-2);
+}
+
+.wk-lang {
+  display: grid;
+  gap: 8px;
+}
+.wk-lang-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  font-size: 11.5px;
+  color: var(--ink-3);
+}
+.wk-lang-list li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.wk-lang-list i {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+}
+
+.wk-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px dashed var(--line-2);
+  font-size: 12px;
+  color: var(--ink-3);
+}
+.wk-path {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* The lead project spans the row: artwork left, details right. */
+.wk-lead {
+  grid-column: 1 / -1;
+}
+.wk-lead > a {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+}
+.wk-lead .wk-cover {
+  border-bottom: 0;
+  border-right: 1px solid var(--line);
+}
+.wk-lead .wk-cover .dither-canvas {
+  height: 100%;
+  min-height: 100%;
+  object-fit: cover;
+}
+.wk-lead .wk-body {
+  padding: clamp(24px, 3vw, 36px);
+}
+.wk-lead .wk-title {
+  font-size: clamp(36px, 4.4vw, 60px);
+}
+.wk-lead .wk-sum {
+  font-size: 17px;
+}
+
+/* ── other repositories ── */
+.wk-more {
+  margin-top: 40px;
+}
+.repo-list {
+  margin-top: 12px;
+}
+.repo-list a {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 120px 80px;
+  gap: 16px;
+  align-items: baseline;
+  padding: 16px 4px;
+  border-top: 1px solid var(--line);
+  transition: background 0.2s;
+}
+.repo-list a:hover {
+  background: rgba(242, 240, 235, 0.03);
+}
+.repo-main {
+  display: grid;
+  gap: 2px;
+}
+.repo-name {
+  font-weight: 600;
+}
+.repo-desc {
+  color: var(--ink-2);
+  font-size: 14px;
+}
+.repo-lang,
+.repo-time {
+  font-size: 12px;
+  color: var(--ink-3);
+}
+.repo-time {
+  text-align: right;
+}
+
+@media (max-width: 900px) {
+  .wk-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .wk-lead > a {
+    display: flex;
+  }
+  .wk-lead .wk-cover {
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .repo-list a {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .repo-lang {
+    display: none;
+  }
+}
