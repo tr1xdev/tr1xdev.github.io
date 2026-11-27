@@ -150,7 +150,7 @@ export function useLanguages(): LangState {
 
 export type MixRow = { name: string; value: number; share: number; color: string }
 
-const PALETTE = ['var(--signal)', 'var(--g-arch)', 'var(--g-data)', 'var(--g-infra)', '#d8b45a']
+const PALETTE = ['var(--accent)', 'var(--g-arch)', 'var(--g-data)', 'var(--g-infra)', '#d8b45a']
 
 /** Top languages as shares of the total, the long tail folded into "Other". */
 export function mix(total: LangBytes, top = 5): MixRow[] {

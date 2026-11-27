@@ -1,4 +1,8 @@
+import { useState } from 'react'
 import { featured, profile } from '../data/profile'
+import type { Featured } from '../data/profile'
+import { DitherCanvas } from '../dither/DitherCanvas'
+import { patterns } from '../dither/patterns'
 import { ago, mix, pct, useLanguages, useRepos } from '../github'
 import type { Repo } from '../github'
 
@@ -8,10 +12,10 @@ function LangBar({ name }: { name: string }) {
   const langs = useLanguages()
   const bytes = langs.status === 'ok' ? langs.byRepo[name] : undefined
   const rows = bytes ? mix(bytes, 3) : []
-  if (!rows.length) return <div className="wk-bar is-empty" aria-hidden="true" />
+  if (!rows.length) return <div className="lang-bar is-empty" aria-hidden="true" />
   return (
     <div className="wk-lang">
-      <div className="wk-bar" role="img" aria-label={rows.map((r) => `${r.name} ${pct(r.share)}`).join(', ')}>
+      <div className="lang-bar" role="img" aria-label={rows.map((r) => `${r.name} ${pct(r.share)}`).join(', ')}>
         {rows.map((r) => (
           <span key={r.name} style={{ flexGrow: r.value, background: r.color }} />
         ))}
@@ -28,6 +32,56 @@ function LangBar({ name }: { name: string }) {
   )
 }
 
+function ProjectCard({ project, repo, index, loading }: { project: Featured; repo?: Repo; index: number; loading: boolean }) {
+  const [active, setActive] = useState(false)
+  const lead = index === 0
+  const href = repo?.html_url ?? `${profile.links.github}/${project.repo}`
+
+  return (
+    <li className={`wk${lead ? ' wk-lead' : ''}`} data-reveal>
+      <a
+        href={href}
+        target="_blank"
+        rel="noreferrer"
+        onPointerEnter={() => setActive(true)}
+        onPointerLeave={() => setActive(false)}
+        onFocus={() => setActive(true)}
+        onBlur={() => setActive(false)}
+      >
+        <span className="wk-cover">
+          <DitherCanvas field={patterns[project.cover]} width={lead ? 200 : 160} height={lead ? 120 : 90} play={active} startAt={index * 3 + 1} />
+          <span className="wk-fig mono">fig. {String(index + 1).padStart(2, '0')}</span>
+        </span>
+        <span className="wk-body">
+          <span className="wk-top mono">
+            <span>{project.kind}</span>
+            {repo?.archived && <span className="wk-flag">archived</span>}
+          </span>
+          <span className="wk-title">
+            {project.title}
+            <span className="arrow" aria-hidden="true">
+              ↗
+            </span>
+          </span>
+          <span className="wk-sum">{project.summary}</span>
+          <span className="chips mono">
+            {project.stack.map((s) => (
+              <span key={s}>{s}</span>
+            ))}
+          </span>
+          <LangBar name={repo?.name ?? project.repo} />
+          <span className="wk-meta mono">
+            <span className="wk-path">
+              {profile.githubUser}/{project.repo}
+            </span>
+            <span>{repo ? `★ ${repo.stargazers_count} · ${ago(repo.pushed_at)}` : loading ? '…' : ''}</span>
+          </span>
+        </span>
+      </a>
+    </li>
+  )
+}
+
 export function Work() {
   const state = useRepos()
   const repos = state.status === 'ok' ? state.repos : []
@@ -38,54 +92,17 @@ export function Work() {
   return (
     <div className="work">
       <ol className="wk-grid">
-        {featured.map((f, i) => {
-          const r = byName.get(f.repo.toLowerCase())
-          const href = r?.html_url ?? `${profile.links.github}/${f.repo}`
-          return (
-            <li key={f.repo} className={`wk${i === 0 ? ' wk-lead' : ''}`}>
-              <a href={href} target="_blank" rel="noreferrer">
-                <span className="wk-top mono">
-                  <span className="wk-no">{String(i + 1).padStart(2, '0')}</span>
-                  <span className="wk-kind">{f.kind}</span>
-                  {r?.archived && <span className="wk-flag">archived</span>}
-                </span>
-                <span className="wk-title">
-                  {f.title}
-                  <span className="arrow" aria-hidden="true">↗</span>
-                </span>
-                <span className="wk-sum">{f.summary}</span>
-                <span className="wk-stack mono">
-                  {f.stack.map((s) => (
-                    <span key={s}>{s}</span>
-                  ))}
-                </span>
-                <LangBar name={r?.name ?? f.repo} />
-                <span className="wk-meta mono">
-                  <span>github.com/{profile.githubUser}/{f.repo}</span>
-                  <span>
-                    {r ? (
-                      <>
-                        ★ {r.stargazers_count} · {ago(r.pushed_at)}
-                      </>
-                    ) : state.status === 'loading' ? (
-                      '…'
-                    ) : (
-                      ''
-                    )}
-                  </span>
-                </span>
-              </a>
-            </li>
-          )
-        })}
+        {featured.map((f, i) => (
+          <ProjectCard key={f.repo} project={f} repo={byName.get(f.repo.toLowerCase())} index={i} loading={state.status === 'loading'} />
+        ))}
       </ol>
 
-      {state.status === 'ok' && more.length > 0 && (
-        <div className="wk-more">
-          <h3 className="wk-more-title mono">More repositories</h3>
+      {more.length > 0 && (
+        <div className="wk-more" data-reveal>
+          <h3 className="card-label mono">More repositories</h3>
           <ul className="repo-list">
             {more.slice(0, MORE_LIMIT).map((r) => (
-              <li key={r.name} className="repo">
+              <li key={r.name}>
                 <a href={r.html_url} target="_blank" rel="noreferrer">
                   <span className="repo-main">
                     <span className="repo-name">
@@ -103,10 +120,10 @@ export function Work() {
       )}
 
       {state.status === 'error' && (
-        <p className="wk-error mono">GitHub API is not answering (rate limit or offline). Live stats will appear on the next visit.</p>
+        <p className="note mono">GitHub API is not answering (rate limit or offline). Live stats will appear on the next visit.</p>
       )}
 
-      <a className="repos-more mono" href={profile.links.github + '?tab=repositories'} target="_blank" rel="noreferrer">
+      <a className="link-more mono" href={`${profile.links.github}?tab=repositories`} target="_blank" rel="noreferrer">
         All repositories on GitHub ↗
       </a>
     </div>

@@ -1,13 +1,16 @@
 // ─────────────────────────────────────────────────────────────
 //  Edit this file to update everything on the site.
 // ─────────────────────────────────────────────────────────────
+import type { PatternName } from '../dither/patterns'
 
 export const profile = {
   handle: 'tr1xdev',
   partNo: 'TRX-01',
-  revision: 'REV 26.11',
-  role: 'Software & backend developer',
-  summary: 'Backend developer. Systems work, ML experiments, side projects.',
+  role: 'Backend & systems developer',
+  /** One line under the name. Keep it under ~140 characters. */
+  lede: 'I build services that talk over the network, data that has to stay correct, and tools that make the rest of the stack faster.',
+  /** Shown as a green status pill in the hero and the contact section. Empty string hides it. */
+  availability: 'Open to backend roles and projects',
   githubUser: 'tr1xdev',
   site: 'https://tr1xdev.github.io',
   timezone: 'Europe/Moscow',
@@ -20,13 +23,40 @@ export const profile = {
     // Optional — leave empty to hide. e.g. 'https://t.me/yourname'
     telegram: '',
   },
+  /**
+   * Optional photo, e.g. '/portrait.jpg' placed in /public. It is dithered in the browser
+   * to match the rest of the site. Leave empty to show a generated orb instead.
+   */
+  portrait: '',
+}
+
+/** Quick facts under the hero. */
+export const specs = [
+  { key: 'core', value: 'Go · Rust' },
+  { key: 'wire', value: 'gRPC · Kafka' },
+  { key: 'storage', value: 'Postgres · Redis' },
+  { key: 'based in', value: 'Moscow · UTC+3' },
+]
+
+export const about = {
+  statement: 'I like the parts of a system nobody sees: protocols, queues, storage and the failure modes between them.',
+  body: 'Most of my time goes into services in Go and Rust; the rest goes into low-level side projects and ML experiments. I care about contracts first, measurable performance and code that the next person can read.',
+  focus: [
+    'Backend services & system architecture',
+    'Message-driven pipelines on Kafka, gRPC and Protobuf',
+    'Low-level code in Rust, C and C++',
+    'Machine learning, mostly hands-on experiments',
+    'Tests, profiling and observability from day one',
+    'Side projects shipped end-to-end',
+  ],
 }
 
 /**
- * Hand-picked projects shown first in §02. `repo` must match a public GitHub repository name;
+ * Hand-picked projects shown first in "Work". `repo` must match a public GitHub repository name;
  * stars, last push and the language breakdown are read live from the API.
+ * `cover` picks the generative dither artwork (see src/dither/patterns.ts).
  */
-export type Featured = { repo: string; title: string; kind: string; summary: string; stack: string[] }
+export type Featured = { repo: string; title: string; kind: string; summary: string; stack: string[]; cover: PatternName }
 
 export const featured: Featured[] = [
   {
@@ -35,6 +65,7 @@ export const featured: Featured[] = [
     kind: 'Messaging platform',
     summary: 'High-performance messaging platform. Go on the server, React on the client, one protocol between them.',
     stack: ['Go', 'React', 'TypeScript'],
+    cover: 'ripples',
   },
   {
     repo: 'go-shortener',
@@ -42,6 +73,7 @@ export const featured: Featured[] = [
     kind: 'Web service',
     summary: 'URL shortener with a Go backend and a React frontend. Small surface, done properly.',
     stack: ['Go', 'React'],
+    cover: 'dunes',
   },
   {
     repo: 'Reactive',
@@ -49,6 +81,7 @@ export const featured: Featured[] = [
     kind: 'C++ library',
     summary: 'Reactive programming primitives for C++. Archived, kept public as a reference.',
     stack: ['C++', 'CMake'],
+    cover: 'orb',
   },
 ]
 
@@ -94,6 +127,6 @@ export const sections = [
   { id: 'work', no: '02', label: 'Work' },
   { id: 'stack', no: '03', label: 'Stack' },
   { id: 'process', no: '04', label: 'Process' },
-  { id: 'specs', no: '05', label: 'Specs' },
+  { id: 'github', no: '05', label: 'GitHub' },
   { id: 'contact', no: '06', label: 'Contact' },
 ] as const

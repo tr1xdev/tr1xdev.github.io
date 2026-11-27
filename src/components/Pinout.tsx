@@ -29,6 +29,14 @@ export function Pinout() {
     <div className="pinout">
       <div className="pinout-figure">
         <svg viewBox={`0 0 ${W} 560`} role="img" aria-label={`${profile.partNo} pin configuration diagram`}>
+          <defs>
+            {/* A 2-level ordered-dither tile for the package body, styled from CSS. */}
+            <pattern id="ic-dither" width="4" height="4" patternUnits="userSpaceOnUse">
+              <rect width="4" height="4" className="ic-dither-bg" />
+              <rect width="1.5" height="1.5" className="ic-dither-dot" />
+              <rect x="2" y="2" width="1.5" height="1.5" className="ic-dither-dot" />
+            </pattern>
+          </defs>
           {/* body */}
           <rect x={BODY.x} y={BODY.y} width={BODY.w} height={BODY.h} rx="6" className="ic-body" />
           <path
