@@ -111,7 +111,7 @@ export default function App() {
           <Pinout />
         </Section>
 
-        <Section id="process" no="04" title="How I work" kicker="spec → ship">
+        <Section id="process" no="04" title="How I work">
           <Process />
         </Section>
 
