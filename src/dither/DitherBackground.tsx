@@ -40,7 +40,8 @@ export function DitherBackground() {
     }
 
     const onResize = () => field.resize()
-    const onMove = (e: PointerEvent) => field.setPointer(e.clientX, e.clientY)
+    // Only a mouse gets the light; on touch screens it would just follow the scrolling thumb.
+    const onMove = (e: PointerEvent) => e.pointerType === 'mouse' && field.setPointer(e.clientX, e.clientY)
     const onLeave = () => field.setPointer(null)
     const onVisibility = () => (document.hidden ? field.stop() : field.start())
 

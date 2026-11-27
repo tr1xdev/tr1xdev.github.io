@@ -1,6 +1,12 @@
 import { FRAG, VERT } from './shader'
 import { hexToRgb } from './palette'
 
+const FRAME_MS = 1000 / 30 - 2
+/** Frames slower than this count as "struggling". */
+const SLOW_MS = 55
+const SLOW_FRAMES = 24
+const MAX_CELL = 6
+
 export type DitherFieldOptions = {
   /** Four colours, darkest to brightest. */
   palette: readonly [string, string, string, string]
@@ -111,27 +117,54 @@ export function createDitherField(canvas: HTMLCanvasElement, { palette, cellSize
     gl.drawArrays(gl.TRIANGLES, 0, 3)
   }
 
+  // The field drifts slowly, so 30 fps looks the same as 60 and halves the GPU work.
+  // Without a real GPU (software WebGL) frames get slow: coarsen the cells, then stop animating.
+  let cell = cellSize
+  let drawn = 0
+  let slow = 0
+  let stalled = false
+
+  const fit = (force = false) => {
+    const w = Math.max(1, Math.ceil(canvas.clientWidth / cell))
+    const h = Math.max(1, Math.ceil(canvas.clientHeight / cell))
+    if (!force && w === canvas.width && h === canvas.height) return
+    canvas.width = w
+    canvas.height = h
+    gl.viewport(0, 0, w, h)
+  }
+
   const loop = (now: number) => {
-    draw(now)
     raf = requestAnimationFrame(loop)
+    const dt = now - drawn
+    if (dt < FRAME_MS) return
+    slow = dt > SLOW_MS && drawn ? slow + 1 : Math.max(0, slow - 1)
+    drawn = now
+    draw(now)
+    if (slow < SLOW_FRAMES) return
+    slow = 0
+    if (cell < MAX_CELL) {
+      cell = Math.min(MAX_CELL, cell * 1.5)
+      fit(true)
+      draw(now) // resizing clears the canvas; repaint before the browser presents it
+    } else {
+      cancelAnimationFrame(raf)
+      raf = 0
+      stalled = true
+    }
   }
 
   return {
     resize() {
-      const w = Math.max(1, Math.ceil(canvas.clientWidth / cellSize))
-      const h = Math.max(1, Math.ceil(canvas.clientHeight / cellSize))
-      if (w === canvas.width && h === canvas.height) return
-      canvas.width = w
-      canvas.height = h
-      gl.viewport(0, 0, w, h)
+      fit()
+      if (stalled) draw(performance.now())
     },
     setPointer(x, y = 0) {
       if (x === null) {
         pointer.target = 0
         return
       }
-      pointer.tx = x / cellSize
-      pointer.ty = (canvas.clientHeight - y) / cellSize
+      pointer.tx = x / cell
+      pointer.ty = (canvas.clientHeight - y) / cell
       if (pointer.target === 0) {
         // Re-entering: start the light where the cursor is, not where it left.
         pointer.x = pointer.tx
@@ -147,7 +180,7 @@ export function createDitherField(canvas: HTMLCanvasElement, { palette, cellSize
       draw(performance.now())
     },
     start() {
-      if (raf) return
+      if (raf || stalled) return
       last = 0
       raf = requestAnimationFrame(loop)
     },
