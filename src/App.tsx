@@ -46,6 +46,14 @@ export default function App() {
     const behavior = prefersReducedMotion() ? 'auto' : 'smooth'
     if (id === 'top') window.scrollTo({ top: 0, behavior })
     else document.getElementById(id)?.scrollIntoView({ behavior, block: 'start' })
+    // Keep the address bar shareable: tr1xdev.github.io/#work opens on that section.
+    history.replaceState(null, '', id === 'top' ? location.pathname + location.search : `#${id}`)
+  }, [])
+
+  // The sections mount after the browser's own jump to the URL fragment, so honour /#section links here.
+  useEffect(() => {
+    const id = decodeURIComponent(location.hash.slice(1))
+    if (id) document.getElementById(id)?.scrollIntoView({ block: 'start' })
   }, [])
 
   useEffect(() => {
