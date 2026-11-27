@@ -16,12 +16,15 @@ export type DitherFieldOptions = {
 
 /**
  * Framework-agnostic WebGL renderer for the dithered background.
- * The canvas is rendered at 1/cellSize of its CSS size and scaled up with
- * `image-rendering: pixelated`, so every dither cell stays a crisp square.
+ *
+ * The canvas fills its parent element. It is rendered at one pixel per dither cell and scaled
+ * up with `image-rendering: pixelated`. Each cell is snapped to a whole number of device
+ * pixels, and the canvas is sized to exactly that many, so the Bayer pattern stays crisp and
+ * even on 125 % or 150 % display scaling instead of shimmering between 3 and 4 pixel cells.
  */
 export type DitherField = {
   resize(): void
-  /** Pointer position in CSS pixels relative to the canvas, or null when it leaves. */
+  /** Pointer position in CSS pixels relative to the parent's top-left corner, or null when it leaves. */
   setPointer(x: number | null, y?: number): void
   /** Scroll offset in viewport heights. */
   setScroll(viewports: number): void
@@ -124,12 +127,21 @@ export function createDitherField(canvas: HTMLCanvasElement, { palette, cellSize
   let slow = 0
   let stalled = false
 
+  const box = canvas.parentElement ?? canvas
+  /** CSS pixels per dither cell after snapping to whole device pixels. */
+  let cssCell = cell
   const fit = (force = false) => {
-    const w = Math.max(1, Math.ceil(canvas.clientWidth / cell))
-    const h = Math.max(1, Math.ceil(canvas.clientHeight / cell))
+    const dpr = window.devicePixelRatio || 1
+    const device = Math.max(1, Math.round(cell * dpr))
+    cssCell = device / dpr
+    const w = Math.max(1, Math.ceil(box.clientWidth / cssCell))
+    const h = Math.max(1, Math.ceil(box.clientHeight / cssCell))
     if (!force && w === canvas.width && h === canvas.height) return
     canvas.width = w
     canvas.height = h
+    // May overhang the parent by less than one cell; the parent clips it.
+    canvas.style.width = `${w * cssCell}px`
+    canvas.style.height = `${h * cssCell}px`
     gl.viewport(0, 0, w, h)
   }
 
@@ -163,8 +175,8 @@ export function createDitherField(canvas: HTMLCanvasElement, { palette, cellSize
         pointer.target = 0
         return
       }
-      pointer.tx = x / cell
-      pointer.ty = (canvas.clientHeight - y) / cell
+      pointer.tx = x / cssCell
+      pointer.ty = canvas.height - y / cssCell
       if (pointer.target === 0) {
         // Re-entering: start the light where the cursor is, not where it left.
         pointer.x = pointer.tx

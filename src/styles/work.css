@@ -118,13 +118,13 @@
   grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
 }
 .wk-lead .wk-cover {
+  min-height: 320px;
   border-bottom: 0;
   border-right: 1px solid var(--line);
 }
-.wk-lead .wk-cover .dither-canvas {
-  height: 100%;
-  min-height: 100%;
-  object-fit: cover;
+.wk-lead .wk-cover .dither-frame {
+  position: absolute;
+  inset: 0;
 }
 .wk-lead .wk-body {
   padding: clamp(24px, 3vw, 36px);
@@ -213,6 +213,8 @@
     display: flex;
   }
   .wk-lead .wk-cover {
+    min-height: 0;
+    aspect-ratio: 16 / 9;
     border-right: 0;
     border-bottom: 1px solid var(--line);
   }

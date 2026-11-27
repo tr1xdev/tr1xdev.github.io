@@ -9,7 +9,7 @@ export function Contact({ onCopy }: { onCopy: (text: string, label: string) => v
 
   return (
     <div className="contact card" ref={ref}>
-      <DitherCanvas field={horizon} width={240} height={110} play={inView} startAt={0.5} className="contact-art" />
+      <DitherCanvas field={horizon} aspect={240 / 110} cell={4} play={inView} startAt={0.5} className="contact-art" />
       <div className="contact-in">
         <p className="contact-lede">
           {email ? 'Email is the fastest way to reach me.' : 'The fastest way to reach me is GitHub.'}

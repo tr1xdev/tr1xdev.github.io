@@ -5,8 +5,8 @@ import { imageField, orb } from '../dither/patterns'
 import type { Field } from '../dither/paint'
 import { useInView } from '../hooks'
 
-const W = 120
-const H = 120
+/** Resolution the portrait is sampled at before dithering. */
+const SAMPLE = 200
 
 /** The optional portrait from profile.ts, dithered; the generated orb until it loads (or if it fails). */
 function usePortraitField(): Field {
@@ -15,7 +15,7 @@ function usePortraitField(): Field {
     if (!profile.portrait) return
     const img = new Image()
     img.decoding = 'async'
-    img.onload = () => setField(() => imageField(img, W, H))
+    img.onload = () => setField(() => imageField(img, SAMPLE, SAMPLE))
     img.src = profile.portrait
   }, [])
   return field
@@ -35,8 +35,7 @@ export function About() {
       <figure className="about-visual" ref={ref}>
         <DitherCanvas
           field={field}
-          width={W}
-          height={H}
+          aspect={1}
           play={inView && !profile.portrait}
           startAt={2}
           label={profile.portrait ? `Portrait of ${profile.handle}` : undefined}

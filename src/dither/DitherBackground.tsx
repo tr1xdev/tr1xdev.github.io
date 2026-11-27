@@ -65,7 +65,9 @@ export function DitherBackground() {
   }, [reduced])
 
   return supported ? (
-    <canvas ref={ref} className="dither-bg" aria-hidden="true" />
+    <div className="dither-bg" aria-hidden="true">
+      <canvas ref={ref} />
+    </div>
   ) : (
     <div className="dither-bg dither-bg--static" aria-hidden="true" />
   )

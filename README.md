@@ -11,8 +11,10 @@ else is plain CSS.
 
 ## What's inside
 
-- **Dithered WebGL background.** Domain-warped noise quantised to four colours with an 8×8 Bayer matrix.
-  It follows the mouse, shifts with scroll, runs at 30 fps, pauses in hidden tabs, and backs off on
+- **Dithered WebGL background.** A large sphere lit from the upper right, drawn in four colours with an
+  8×8 Bayer matrix. The light leans toward the pointer, the sphere drifts up as you scroll, and only the
+  brightest highlight turns orange. Each cell is a whole number of device pixels, so the pattern stays
+  crisp at 125 % and 150 % display scaling. It runs at 30 fps, pauses in hidden tabs, and backs off on
   machines without a GPU (bigger cells first, then a still frame).
 - **Generative project covers.** A lit orb, contour dunes, interfering ripples and a horizon grid,
   each a pure function of position and time, dithered on a 4×4 Bayer matrix. They animate on hover.
@@ -60,8 +62,8 @@ The dither code in [`src/dither`](src/dither) has no dependencies besides React 
 import { createDitherField } from './dither/field'
 
 const field = createDitherField(canvas, {
-  palette: ['#0a0a0b', '#19191d', '#34343b', '#ff5a1f'], // darkest → brightest
-  cellSize: 3,                                            // CSS px per dither cell
+  palette: ['#0a0a0b', '#1f1f24', '#5f5e66', '#ff5a1f'], // darkest → brightest
+  cellSize: 3,                                            // CSS px per cell, snapped to device pixels
 })
 field?.resize()
 field?.start()
@@ -71,17 +73,20 @@ field?.start()
 import { DitherCanvas } from './dither/DitherCanvas'
 import { orb } from './dither/patterns'
 
-<DitherCanvas field={orb} width={160} height={90} play />
+<DitherCanvas field={orb} aspect={16 / 9} play />
 ```
+
+The frame takes the width of its container and `aspect` sets its height; pass `fill` instead to size
+it from CSS.
 
 A `Field` is just `(u, v, t, aspect) => brightness`, so new patterns are a few lines each.
 `imageField()` turns any loaded image into a field.
 
 How it works, briefly: each pixel's brightness is compared against a threshold taken from a Bayer
 matrix at that pixel's position. Because neighbouring thresholds are spread as far apart as possible,
-smooth gradients turn into the regular cross-hatched dot patterns of ordered dithering. The canvas is
-rendered at a fraction of its CSS size and scaled up with `image-rendering: pixelated`, which keeps
-every cell a crisp square and makes the effect cheap.
+smooth gradients turn into the regular cross-hatched dot patterns of ordered dithering. Each canvas
+has one pixel per dither cell and is scaled up with `image-rendering: pixelated`. The cell size is
+rounded to whole device pixels first, which keeps every cell a crisp square and makes the effect cheap.
 
 ## Project layout
 
