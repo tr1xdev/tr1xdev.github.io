@@ -150,19 +150,24 @@ kbd {
   image-rendering: pixelated;
 }
 
-/* ── scramble text: the ghost reserves space, the live copy animates on top ── */
+/* ── scramble text: the real text keeps its place, the glyphs are painted on top while it decodes ── */
 .scramble {
   position: relative;
   display: inline-block;
   white-space: nowrap;
 }
-.scramble-ghost {
-  visibility: hidden;
+.scramble[data-live] {
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke-color: transparent;
 }
-.scramble-live {
+.scramble[data-live]::after {
+  content: attr(data-live);
+  content: attr(data-live) / '';
   position: absolute;
   inset: 0;
   overflow: hidden;
+  -webkit-text-fill-color: currentColor;
+  -webkit-text-stroke-color: var(--scramble-stroke, transparent);
 }
 
 /* ── primitives ── */

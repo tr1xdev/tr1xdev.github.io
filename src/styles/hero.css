@@ -41,8 +41,9 @@
   letter-spacing: -0.07em;
 }
 .hero-name-dim {
+  --scramble-stroke: var(--ink-2);
   color: transparent;
-  -webkit-text-stroke: max(1px, 0.012em) var(--ink-2);
+  -webkit-text-stroke: max(1px, 0.012em) var(--scramble-stroke);
 }
 .hero-caret {
   display: inline-block;
