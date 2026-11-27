@@ -10,10 +10,8 @@
 }
 .topbar.is-scrolled,
 .topbar.is-open {
-  background: rgba(10, 10, 11, 0.72);
+  background: rgba(10, 10, 11, 0.94);
   border-color: var(--line);
-  backdrop-filter: blur(14px) saturate(140%);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
 }
 .topbar-in {
   display: flex;
@@ -52,7 +50,7 @@
 .nav a {
   position: relative;
   padding: 8px 10px;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   color: var(--ink-2);
   transition:
     color 0.2s,
@@ -102,7 +100,7 @@
   width: 40px;
   height: 40px;
   border: 1px solid var(--line-2);
-  border-radius: 999px;
+  border-radius: var(--radius-sm);
   background: rgba(10, 10, 11, 0.55);
   cursor: pointer;
 }
@@ -242,7 +240,7 @@
   bottom: 24px;
   z-index: 60;
   padding: 10px 16px;
-  border-radius: 999px;
+  border-radius: var(--radius-sm);
   background: var(--accent);
   color: var(--on-accent);
   font-size: 13px;

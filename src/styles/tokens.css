@@ -27,8 +27,9 @@
   --sans: 'Geist Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --mono: 'Geist Mono Variable', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
 
-  --radius: 16px;
-  --radius-sm: 10px;
+  /* Square corners everywhere, like the dither cells. One value for small and large things. */
+  --radius: 2px;
+  --radius-sm: 2px;
   --wrap: 1240px;
   --gutter: clamp(20px, 4vw, 40px);
   --topbar: 64px;

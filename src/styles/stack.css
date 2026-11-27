@@ -173,7 +173,6 @@
 .legend-item.is-on {
   border-color: var(--g);
   background: var(--surface-2);
-  box-shadow: inset 3px 0 0 var(--g);
 }
 .legend-count {
   font-size: 13px;
@@ -213,7 +212,7 @@
 .pg-list li {
   padding: 6px 12px;
   border: 1px solid var(--line-2);
-  border-radius: 999px;
+  border-radius: var(--radius-sm);
   font-weight: 500;
 }
 .pg-note {

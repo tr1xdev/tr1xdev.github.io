@@ -5,9 +5,7 @@
   display: grid;
   place-items: start center;
   padding: 14vh 16px 16px;
-  background: rgba(0, 0, 0, 0.62);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.72);
   animation: fade 0.15s ease-out;
 }
 .palette {
@@ -16,7 +14,6 @@
   border: 1px solid var(--line-2);
   border-radius: var(--radius);
   background: var(--surface-solid);
-  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.7);
   animation: rise 0.18s var(--ease);
 }
 .palette-input {
@@ -51,12 +48,11 @@
   gap: 12px;
   min-height: 44px;
   padding: 0 12px;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
 }
 .palette-list li.is-active {
   background: var(--surface-2);
-  box-shadow: inset 2px 0 0 var(--accent);
 }
 .pc-group {
   font-size: 11px;
