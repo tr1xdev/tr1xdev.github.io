@@ -45,10 +45,8 @@
 .wk-top {
   display: flex;
   gap: 10px;
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--accent-ink);
+  font-size: 12px;
+  color: var(--ink-3);
 }
 .wk-flag {
   color: var(--ink-3);
@@ -136,6 +134,36 @@
 }
 .wk-lead .wk-sum {
   font-size: 17px;
+}
+
+/* ── language mix ── */
+.mix {
+  display: grid;
+  gap: 16px;
+  margin-top: 48px;
+}
+.mix-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 16px;
+  font-size: 12px;
+  color: var(--ink-3);
+}
+.mix-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+}
+.mix-legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+.mix-legend .mono {
+  color: var(--ink-3);
+  font-size: 12px;
 }
 
 /* ── other repositories ── */

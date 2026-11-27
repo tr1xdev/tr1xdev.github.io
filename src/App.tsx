@@ -10,7 +10,6 @@ import { Nav } from './components/Nav'
 import { Pinout } from './components/Pinout'
 import { Process } from './components/Process'
 import { Section } from './components/Section'
-import { Stats } from './components/Stats'
 import { Work } from './components/Work'
 import { isMac, prefersReducedMotion, useActiveSection } from './hooks'
 
@@ -75,8 +74,8 @@ export default function App() {
   const commands = useMemo<Command[]>(() => {
     const open = (url: string) => () => window.open(url, '_blank', 'noopener')
     return [
-      { id: 'top', group: 'go to', label: '00 · Top', run: () => go('top') },
-      ...sections.map((s) => ({ id: `go-${s.id}`, group: 'go to', label: `${s.no} · ${s.label}`, run: () => go(s.id) })),
+      { id: 'top', group: 'go to', label: 'Top', run: () => go('top') },
+      ...sections.map((s) => ({ id: `go-${s.id}`, group: 'go to', label: s.label, run: () => go(s.id) })),
       { id: 'gh', group: 'open', label: 'GitHub profile', hint: '↗', run: open(profile.links.github) },
       ...(profile.links.telegram ? [{ id: 'tg', group: 'open', label: 'Telegram', hint: '↗', run: open(profile.links.telegram) }] : []),
       ...(profile.links.email ? [{ id: 'copy-mail', group: 'copy', label: 'Email address', run: () => copy(profile.links.email, 'Email') }] : []),
@@ -99,27 +98,24 @@ export default function App() {
       <main>
         <Hero onGo={go} />
 
-        <Section id="about" no="01" title="About" kicker="who’s behind the handle">
+        <Section id="about" title="About">
           <About />
         </Section>
 
-        <Section id="work" no="02" title="Selected work" kicker="live from github · hover a cover">
+        <Section id="work" title="Selected work">
           <Work />
         </Section>
 
-        <Section id="stack" no="03" title="Stack" kicker="22-pin DIP · hover the pins">
+        <Section id="stack" title="Stack">
           <Pinout />
         </Section>
 
-        <Section id="process" no="04" title="How I work">
+        <Section id="process" title="How I work">
           <Process />
         </Section>
 
-        <Section id="github" no="05" title="GitHub, live" kicker="measured on page load">
-          <Stats />
-        </Section>
 
-        <Section id="contact" no="06" title="Contact" kicker="let’s talk">
+        <Section id="contact" title="Contact">
           <Contact onCopy={copy} />
           <p className="colophon mono">
             <span>© {new Date().getFullYear()} {profile.handle}</span>

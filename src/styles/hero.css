@@ -95,8 +95,6 @@
 }
 .hero-specs dt {
   font-size: 11px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
   color: var(--ink-3);
 }
 .hero-specs dd {

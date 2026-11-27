@@ -33,7 +33,7 @@
 .step-no {
   padding-top: 6px;
   font-size: 12px;
-  color: var(--accent-ink);
+  color: var(--ink-3);
 }
 .step-body {
   display: grid;

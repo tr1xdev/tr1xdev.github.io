@@ -142,8 +142,6 @@
 .pd-meta {
   margin-top: 14px;
   font-size: 12px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
   color: var(--ink-3);
 }
 
@@ -200,8 +198,6 @@
   margin-bottom: 12px;
   font-size: 11px;
   font-weight: 500;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
   color: var(--ink-2);
 }
 .pg-list {

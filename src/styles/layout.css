@@ -73,10 +73,6 @@
   margin-left: -2px;
   background: var(--accent);
 }
-.nav-no {
-  margin-right: 6px;
-  color: var(--ink-3);
-}
 
 .topbar-actions {
   display: flex;
@@ -151,13 +147,6 @@
   font-weight: 600;
   letter-spacing: -0.03em;
 }
-.mnav a .nav-no {
-  font-family: var(--mono);
-  font-size: 13px;
-  font-weight: 400;
-  letter-spacing: 0;
-  color: var(--accent-ink);
-}
 .mnav a.mnav-gh {
   margin-top: 16px;
   border: 0;
@@ -170,37 +159,14 @@
 .sec {
   padding-top: clamp(96px, 13vw, 168px);
 }
-.sec-head {
-  display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: 8px 20px;
+.sec-title {
   margin-bottom: clamp(32px, 4vw, 52px);
   padding-top: 18px;
   border-top: 1px solid var(--line-2);
-}
-.sec-no {
-  font-size: 13px;
-  color: var(--accent-ink);
-}
-.sec-title {
   font-size: clamp(44px, 7.4vw, 104px);
   font-weight: 600;
   line-height: 0.92;
   letter-spacing: -0.055em;
-}
-.sec-kicker {
-  margin-left: auto;
-  font-size: 12px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ink-3);
-}
-
-.bento {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: 16px;
 }
 
 .link-more {
@@ -257,11 +223,6 @@
   transform: translate(-50%, 0);
 }
 
-@media (max-width: 1080px) {
-  .nav-no {
-    display: none;
-  }
-}
 @media (max-width: 900px) {
   .nav {
     display: none;
@@ -271,12 +232,6 @@
   }
   .menu-btn {
     display: grid;
-  }
-  .bento {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .bento > * {
-    grid-column: auto !important;
   }
 }
 @media (min-width: 901px) {
@@ -288,9 +243,5 @@
   .cmd-btn,
   .colophon-kbd {
     display: none;
-  }
-  .sec-kicker {
-    margin-left: 0;
-    width: 100%;
   }
 }

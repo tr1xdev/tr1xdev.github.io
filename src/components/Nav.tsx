@@ -39,7 +39,6 @@ export function Nav({ active, onGo, onPalette }: Props) {
         go(s.id)
       }}
     >
-      <span className="nav-no">{s.no}</span>
       {s.label}
     </a>
   ))

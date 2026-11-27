@@ -56,8 +56,6 @@
 }
 .pc-group {
   font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
   color: var(--ink-3);
 }
 .palette-list li.is-active .pc-group {

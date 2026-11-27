@@ -123,10 +123,9 @@ export const pins: Pin[] = [
 ]
 
 export const sections = [
-  { id: 'about', no: '01', label: 'About' },
-  { id: 'work', no: '02', label: 'Work' },
-  { id: 'stack', no: '03', label: 'Stack' },
-  { id: 'process', no: '04', label: 'Process' },
-  { id: 'github', no: '05', label: 'GitHub' },
-  { id: 'contact', no: '06', label: 'Contact' },
+  { id: 'about', label: 'About' },
+  { id: 'work', label: 'Work' },
+  { id: 'stack', label: 'Stack' },
+  { id: 'process', label: 'Process' },
+  { id: 'contact', label: 'Contact' },
 ] as const

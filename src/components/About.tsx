@@ -26,13 +26,13 @@ export function About() {
   const [ref, inView] = useInView<HTMLElement>()
 
   return (
-    <div className="bento about">
-      <article className="card about-statement">
+    <div className="about">
+      <div className="about-text">
         <p className="about-big">{about.statement}</p>
         <p className="about-body">{about.body}</p>
-      </article>
+      </div>
 
-      <figure className="card about-visual" ref={ref}>
+      <figure className="about-visual" ref={ref}>
         <DitherCanvas
           field={field}
           width={W}
@@ -47,41 +47,40 @@ export function About() {
         </figcaption>
       </figure>
 
-      <article className="card about-focus">
-        <h3 className="card-label mono">Focus</h3>
-        <ol>
-          {about.focus.map((f, i) => (
-            <li key={f}>
-              <span className="mono">{String(i + 1).padStart(2, '0')}</span>
-              {f}
-            </li>
+      <div className="about-col">
+        <h3 className="label mono">Focus</h3>
+        <ul className="rule-list">
+          {about.focus.map((f) => (
+            <li key={f}>{f}</li>
           ))}
-        </ol>
-      </article>
+        </ul>
+      </div>
 
-      <article className="card about-facts">
-        <h3 className="card-label mono">Quick facts</h3>
-        <dl>
+      <div className="about-col">
+        <h3 className="label mono">Details</h3>
+        <dl className="rule-list facts">
+          {profile.location && (
+            <div>
+              <dt>Based in</dt>
+              <dd>{profile.location}</dd>
+            </div>
+          )}
           <div>
-            <dt className="mono">based in</dt>
-            <dd>{profile.location}</dd>
-          </div>
-          <div>
-            <dt className="mono">time zone</dt>
+            <dt>Time zone</dt>
             <dd>{profile.tzLabel}</dd>
           </div>
           <div>
-            <dt className="mono">role</dt>
+            <dt>Role</dt>
             <dd>{profile.role}</dd>
           </div>
           {profile.availability && (
             <div>
-              <dt className="mono">status</dt>
+              <dt>Status</dt>
               <dd>{profile.availability}</dd>
             </div>
           )}
         </dl>
-      </article>
+      </div>
     </div>
   )
 }
