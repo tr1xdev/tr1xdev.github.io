@@ -48,7 +48,7 @@
   font-size: clamp(28px, 2.8vw, 36px);
   font-weight: 600;
   line-height: 1;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.025em;
 }
 .wk-title .arrow {
   font-size: 0.7em;

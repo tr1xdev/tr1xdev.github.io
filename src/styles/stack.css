@@ -40,7 +40,7 @@
   font-family: var(--sans);
   font-weight: 650;
   font-size: 44px;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.025em;
 }
 .ic-sub {
   fill: var(--accent-ink);
@@ -134,7 +134,7 @@
   font-size: 44px;
   font-weight: 600;
   line-height: 1;
-  letter-spacing: -0.045em;
+  letter-spacing: -0.03em;
 }
 .pd-note {
   color: var(--ink-2);

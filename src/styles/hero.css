@@ -11,16 +11,17 @@
 }
 
 .hero-name {
+  --track: -0.03em;
   margin-left: -0.05em;
   font-size: clamp(92px, 20vw, 300px);
   font-weight: 650;
   line-height: 0.8;
-  letter-spacing: -0.07em;
+  letter-spacing: var(--track);
 }
 /* Negative tracking is also applied after the last letter, which leaves the box narrower than
    the glyph. Give that space back so the last letter is never cut. */
 .hero-name-dim {
-  padding-inline-end: 0.07em;
+  padding-inline-end: calc(0.03em - var(--track));
   color: transparent;
   -webkit-text-stroke: max(1px, 0.012em) var(--ink-2);
 }
@@ -30,7 +31,7 @@
   font-size: clamp(24px, 3.2vw, 40px);
   font-weight: 550;
   line-height: 1.1;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.02em;
 }
 .hero-lede {
   max-width: 580px;

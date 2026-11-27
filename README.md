@@ -111,4 +111,4 @@ Pull requests and feature branches are typechecked and built by
 
 ## Credits
 
-Typefaces: [Geist and Geist Mono](https://vercel.com/font) by Vercel, SIL Open Font License, self-hosted via Fontsource.
+Typefaces: [IBM Plex Sans and IBM Plex Mono](https://github.com/IBM/plex) by IBM, SIL Open Font License, self-hosted via Fontsource.
