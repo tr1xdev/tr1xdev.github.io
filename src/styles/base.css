@@ -165,7 +165,6 @@ kbd {
   content: attr(data-live) / '';
   position: absolute;
   inset: 0;
-  overflow: hidden;
   -webkit-text-fill-color: currentColor;
   -webkit-text-stroke-color: var(--scramble-stroke, transparent);
 }

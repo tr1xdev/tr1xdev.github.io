@@ -40,7 +40,10 @@
   line-height: 0.8;
   letter-spacing: -0.07em;
 }
+/* Negative tracking is also applied after the last letter, which leaves the box narrower than
+   the glyph. Give that space back so the last letter is never cut and the caret clears it. */
 .hero-name-dim {
+  padding-inline-end: 0.07em;
   --scramble-stroke: var(--ink-2);
   color: transparent;
   -webkit-text-stroke: max(1px, 0.012em) var(--scramble-stroke);
