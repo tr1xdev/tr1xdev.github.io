@@ -28,6 +28,8 @@ else is plain CSS.
 
 ## Run it
 
+Needs Node 20.19+ (22 recommended, see [`.nvmrc`](.nvmrc)).
+
 ```bash
 npm install
 npm run dev        # http://localhost:5173
@@ -99,6 +101,8 @@ src/
 Every push to `main` builds the site and publishes it to GitHub Pages via
 [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml).
 One-time setup: **Settings → Pages → Source: GitHub Actions**.
+Pull requests and feature branches are typechecked and built by
+[`.github/workflows/ci.yml`](.github/workflows/ci.yml).
 
 ## Credits
 
