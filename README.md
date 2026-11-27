@@ -22,9 +22,17 @@ else is plain CSS.
   come from the public GitHub API, cached per session, with graceful fallbacks when rate-limited.
 - **Interactive stack.** Skills drawn as a 22-pin chip; hover a pin or filter by group.
 - **Command palette.** `⌘K` / `Ctrl K` or `/`.
-- **Accessible by default.** Keyboard navigation, skip link, visible focus, screen-reader text for every
-  animated heading, and `prefers-reduced-motion` turns every animation into a still frame.
-- **Shareable.** Open Graph card, `summary_large_image` Twitter card and schema.org `Person` data.
+- **Accessible.** Keyboard navigation, skip link, visible focus, and `prefers-reduced-motion` turns the
+  dither into a still frame.
+- **Shareable.** Open Graph card, `summary_large_image` Twitter card and schema.org `Person` data, all
+  generated from `profile.ts`.
+
+## Design rules
+
+The site avoids the usual signs of generated design: status pills with pulsing dots, fake terminals,
+text effects, fade-ins on scroll, glow and frosted glass, bento grids, numbered sections. The full list
+is in [`AGENTS.md`](AGENTS.md), which most coding agents read before they edit
+([agents.md](https://agents.md/)); `CLAUDE.md` imports it for Claude Code.
 
 <img src="docs/preview-mobile.png" alt="Mobile preview" width="300" />
 
@@ -116,11 +124,11 @@ rounded to whole device pixels first, which keeps every cell a crisp square and 
 ```
 src/
   App.tsx            page composition, keyboard shortcuts, command list
-  components/        one file per section + Nav, StatusBar, CommandPalette, Scramble
+  components/        one file per section + Nav, CommandPalette
   dither/            WebGL background, canvas renderer, patterns, Bayer matrices
-  data/profile.ts    all content
+  data/profile.ts    all content, also used for the metadata in index.html
   github.ts          GitHub API hooks with session cache
-  hooks.ts           reduced motion, in-view, reveal, scramble, clock
+  hooks.ts           reduced motion, in-view, active section, clock and UTC offset
   styles/            tokens, base, layout and one stylesheet per section
 ```
 
