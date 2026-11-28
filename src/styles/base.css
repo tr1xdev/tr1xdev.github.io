@@ -276,10 +276,13 @@ a:focus-visible .arrow {
   height: 16px;
   border-radius: 3px;
 }
-.dither-canvas {
-  display: block;
-  width: 100%;
-  height: auto;
-  image-rendering: crisp-edges;
-  image-rendering: pixelated;
+/* Layered so a canvas can be sized and placed with utilities. */
+@layer components {
+  .dither-canvas {
+    display: block;
+    width: 100%;
+    height: auto;
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+  }
 }
