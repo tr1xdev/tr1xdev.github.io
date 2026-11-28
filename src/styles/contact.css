@@ -17,6 +17,11 @@
   gap: 24px;
   padding: clamp(28px, 5vw, 64px);
 }
+.contact-avail {
+  margin: 0;
+  font-size: 12px;
+  color: var(--live-ink);
+}
 .contact-title {
   max-width: 900px;
   font-size: clamp(38px, 6vw, 84px);

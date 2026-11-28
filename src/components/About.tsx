@@ -62,14 +62,18 @@ export function About() {
       <article className="card about-facts" data-reveal>
         <h3 className="card-label mono">Quick facts</h3>
         <dl>
-          <div>
-            <dt className="mono">based in</dt>
-            <dd>{profile.location}</dd>
-          </div>
-          <div>
-            <dt className="mono">time zone</dt>
-            <dd>{profile.tzLabel}</dd>
-          </div>
+          {profile.location && (
+            <div>
+              <dt className="mono">based in</dt>
+              <dd>{profile.location}</dd>
+            </div>
+          )}
+          {profile.tzLabel && (
+            <div>
+              <dt className="mono">time zone</dt>
+              <dd>{profile.tzLabel}</dd>
+            </div>
+          )}
           <div>
             <dt className="mono">role</dt>
             <dd>{profile.role}</dd>
@@ -77,9 +81,7 @@ export function About() {
           {profile.availability && (
             <div>
               <dt className="mono">status</dt>
-              <dd className="dd-live">
-                <span className="led" aria-hidden="true" /> {profile.availability}
-              </dd>
+              <dd className="dd-live">{profile.availability}</dd>
             </div>
           )}
         </dl>

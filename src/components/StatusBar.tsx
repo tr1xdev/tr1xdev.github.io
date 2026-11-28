@@ -21,9 +21,11 @@ export function StatusBar({ section, onPalette }: { section: string; onPalette: 
       <span className="sb-item sb-online">
         <span className="led" aria-hidden="true" /> online
       </span>
-      <span className="sb-item">
-        <span className="sb-k">local</span> {time} {profile.tzLabel.split(' ')[0]}
-      </span>
+      {time && (
+        <span className="sb-item">
+          <span className="sb-k">local</span> {time} {profile.tzLabel.split(' ')[0]}
+        </span>
+      )}
       <span className="sb-item sb-hide-sm">
         <span className="sb-k">session</span> {uptime}
       </span>

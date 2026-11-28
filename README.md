@@ -43,11 +43,21 @@ All content lives in [`src/data/profile.ts`](src/data/profile.ts):
 
 | Field | What it does |
 | --- | --- |
-| `profile` | Handle, role, one-line pitch, availability pill, time zone, links. `email` and `telegram` stay hidden while empty. |
+| `profile` | Handle, role, one-line pitch, availability line, time zone, links. `email` and `telegram` stay hidden while empty. |
 | `profile.portrait` | Optional path to a photo in `public/`. It is dithered in the browser to match the site. |
 | `specs`, `about` | Quick facts under the hero and the About section. |
 | `featured` | Hand-picked repositories for "Selected work"; `cover` picks the dither artwork. |
 | `pins`, `groups` | The skills chip. |
+
+### Time zone and location
+
+`profile.timezone` takes any IANA zone name such as `Asia/Tokyo`, and the browser works out the clock
+from it, so daylight saving time stays right without any work. `profile.location` and
+`profile.tzLabel` are plain text. Each of the three can be left as `''`, which hides the clock, the
+hero line, the About rows and the status bar item that would have shown it.
+
+This site shows Moscow because that is where its author lives, not because the layout needs a city.
+If you fork it, set your own zone and city, or clear them.
 
 Colours live in [`src/styles/tokens.css`](src/styles/tokens.css) and, for the dither, in
 [`src/dither/palette.ts`](src/dither/palette.ts).

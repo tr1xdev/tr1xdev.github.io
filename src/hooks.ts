@@ -134,24 +134,31 @@ export function useActiveSection(ids: readonly string[]) {
 }
 
 /** Current time in a given IANA zone, ticking every second. */
+/**
+ * Current time in the given IANA zone. Returns an empty string when the zone is empty or unknown,
+ * so a fork can remove the clock by clearing `profile.timezone`.
+ */
 export function useClock(timeZone: string, withSeconds = false) {
   const [now, setNow] = useState(() => new Date())
   useEffect(() => {
     const t = window.setInterval(() => setNow(new Date()), 1000)
     return () => window.clearInterval(t)
   }, [])
-  const fmt = useMemo(
-    () =>
-      new Intl.DateTimeFormat('en-GB', {
+  const fmt = useMemo(() => {
+    if (!timeZone) return null
+    try {
+      return new Intl.DateTimeFormat('en-GB', {
         timeZone,
         hour: '2-digit',
         minute: '2-digit',
         ...(withSeconds ? { second: '2-digit' } : {}),
         hour12: false,
-      }),
-    [timeZone, withSeconds],
-  )
-  return fmt.format(now)
+      })
+    } catch {
+      return null
+    }
+  }, [timeZone, withSeconds])
+  return fmt ? fmt.format(now) : ''
 }
 
 export const isMac = typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.userAgent)

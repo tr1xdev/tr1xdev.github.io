@@ -9,12 +9,15 @@ export const profile = {
   role: 'Backend & systems developer',
   /** One line under the name. Keep it under ~140 characters. */
   lede: 'I build services that talk over the network, data that has to stay correct, and tools that make the rest of the stack faster.',
-  /** Shown as a green status pill in the hero and the contact section. Empty string hides it. */
+  /** Shown as a green line in the hero, About and Contact. Empty string hides it. */
   availability: 'Open to backend roles and projects',
   githubUser: 'tr1xdev',
   site: 'https://tr1xdev.github.io',
+  /** IANA zone, e.g. 'Europe/Moscow'. Empty hides the clock everywhere. */
   timezone: 'Europe/Moscow',
+  /** Free text next to the clock. Empty hides it. */
   tzLabel: 'MSK · UTC+3',
+  /** Free text city. Empty hides the hero line and the About row. */
   location: 'Moscow',
   links: {
     github: 'https://github.com/tr1xdev',
