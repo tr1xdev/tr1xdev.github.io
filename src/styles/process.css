@@ -13,19 +13,19 @@
   text-wrap: balance;
 }
 .process-title .amp {
-  color: var(--accent);
+  color: var(--color-accent);
 }
 .process-copy p {
   max-width: 480px;
   font-size: 17px;
-  color: var(--ink-2);
+  color: var(--color-ink-2);
 }
 .process-copy .process-aside {
   margin-top: 16px;
   padding-left: 14px;
-  border-left: 2px solid var(--accent);
+  border-left: 2px solid var(--color-accent);
   font-size: 15px;
-  color: var(--ink-3);
+  color: var(--color-ink-3);
 }
 .duty {
   display: flex;
@@ -39,11 +39,11 @@
   gap: 8px;
   min-height: 40px;
   padding: 0 16px;
-  border: 1px solid var(--line-2);
+  border: 1px solid var(--color-line-2);
   border-radius: 999px;
   background: rgba(10, 10, 11, 0.6);
-  color: var(--ink-2);
-  font-family: var(--mono);
+  color: var(--color-ink-2);
+  font-family: var(--font-mono);
   font-size: 13px;
   cursor: pointer;
   transition:
@@ -53,26 +53,26 @@
 }
 .duty button span {
   font-size: 11px;
-  color: var(--accent-ink);
+  color: var(--color-accent-ink);
 }
 .duty button:hover {
-  color: var(--ink);
-  border-color: var(--line-3);
+  color: var(--color-ink);
+  border-color: var(--color-line-3);
 }
 .duty button.is-on {
-  border-color: var(--accent);
-  background: var(--accent);
-  color: var(--on-accent);
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  color: var(--color-on-accent);
   font-weight: 600;
 }
 .duty button.is-on span {
-  color: var(--on-accent);
+  color: var(--color-on-accent);
 }
 
 .term {
   overflow: hidden;
-  border: 1px solid var(--line-2);
-  border-radius: var(--radius);
+  border: 1px solid var(--color-line-2);
+  border-radius: var(--radius-card);
   background: rgba(8, 8, 10, 0.94);
   box-shadow: 0 40px 80px -40px rgba(0, 0, 0, 0.9);
 }
@@ -81,9 +81,9 @@
   align-items: center;
   gap: 14px;
   padding: 12px 16px;
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid var(--color-line);
   font-size: 12px;
-  color: var(--ink-3);
+  color: var(--color-ink-3);
 }
 .term-dots {
   display: flex;
@@ -99,10 +99,10 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  color: var(--ink-2);
+  color: var(--color-ink-2);
 }
 .term-sep {
-  color: var(--ink-3);
+  color: var(--color-ink-3);
 }
 .term-rec {
   display: inline-flex;
@@ -110,7 +110,7 @@
   gap: 8px;
   margin-left: auto;
   white-space: nowrap;
-  color: var(--live-ink);
+  color: var(--color-live-ink);
 }
 .term-body {
   min-height: 196px;
@@ -136,7 +136,7 @@
 }
 .term-foot span.is-on {
   width: 32px;
-  background: var(--accent);
+  background: var(--color-accent);
 }
 .tl {
   display: grid;
@@ -146,17 +146,17 @@
   overflow-wrap: anywhere;
 }
 .tl-p {
-  color: var(--ink-3);
+  color: var(--color-ink-3);
 }
 .tl-cmd {
-  color: var(--ink);
+  color: var(--color-ink);
 }
 .tl-cmd .tl-p {
-  color: var(--accent-ink);
+  color: var(--color-accent-ink);
 }
 .tl-note {
   font-style: italic;
-  color: var(--ink-3);
+  color: var(--color-ink-3);
 }
 .tl-out {
   color: #6fd3a5;
@@ -170,7 +170,7 @@
   height: 1.05em;
   margin-left: 2px;
   vertical-align: text-bottom;
-  background: var(--accent);
+  background: var(--color-accent);
   animation: blink 1s steps(1) infinite;
 }
 

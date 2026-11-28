@@ -18,6 +18,9 @@ function pinPos(index: number) {
 
 const groupIds = Object.keys(groups) as GroupId[]
 
+/** Sets --g to the group colour. Spelled out in full so Tailwind can find the class names. */
+const groupColor: Record<GroupId, string> = { lang: 'g-lang', arch: 'g-arch', data: 'g-data', infra: 'g-infra' }
+
 export function Pinout() {
   const [selected, setSelected] = useState(0)
   const [filter, setFilter] = useState<GroupId | null>(null)
@@ -62,7 +65,7 @@ export function Pinout() {
             return (
               <g
                 key={p.signal}
-                className={`pin g-${p.group}${active ? ' is-active' : ''}${dim(p.group) ? ' is-dim' : ''}`}
+                className={`pin ${groupColor[p.group]}${active ? ' is-active' : ''}${dim(p.group) ? ' is-dim' : ''}`}
                 tabIndex={0}
                 role="button"
                 aria-label={`Pin ${i + 1}: ${p.name}, ${groups[p.group].label}`}
@@ -105,7 +108,7 @@ export function Pinout() {
         <div className="pin-detail" aria-live="polite">
           <div className="pd-row mono">
             <span>PIN {String(selected + 1).padStart(2, '0')}</span>
-            <span className={`pd-group g-${pin.group}`}>{groups[pin.group].short}</span>
+            <span className={`pd-group ${groupColor[pin.group]}`}>{groups[pin.group].short}</span>
           </div>
           <p className="pd-name">{pin.name}</p>
           <p className="pd-note">{pin.note}</p>
@@ -120,7 +123,7 @@ export function Pinout() {
               <button
                 key={g}
                 type="button"
-                className={`legend-item g-${g}${on ? ' is-on' : ''}`}
+                className={`legend-item ${groupColor[g]}${on ? ' is-on' : ''}`}
                 aria-pressed={on}
                 onClick={() => setFilter(on ? null : g)}
               >
@@ -136,7 +139,7 @@ export function Pinout() {
 
       <div className="pin-groups">
         {groupIds.map((g) => (
-          <div key={g} className={`pg g-${g}`}>
+          <div key={g} className={`pg ${groupColor[g]}`}>
             <h3 className="pg-title mono">
               <span className="swatch" aria-hidden="true" /> {groups[g].label}
             </h3>

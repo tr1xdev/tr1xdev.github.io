@@ -1,11 +1,11 @@
 @media print {
   :root {
-    --ink: #111;
-    --ink-2: #333;
-    --ink-3: #666;
-    --line: #ddd;
-    --line-2: #ccc;
-    --surface: #fff;
+    --color-ink: #111;
+    --color-ink-2: #333;
+    --color-ink-3: #666;
+    --color-line: #ddd;
+    --color-line-2: #ccc;
+    --color-surface: #fff;
   }
   html,
   body {

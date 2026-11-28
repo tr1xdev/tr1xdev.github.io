@@ -15,7 +15,7 @@
 }
 .about-body {
   max-width: 620px;
-  color: var(--ink-2);
+  color: var(--color-ink-2);
 }
 
 .about-visual {
@@ -35,7 +35,7 @@
   font-size: 11px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--ink-3);
+  color: var(--color-ink-3);
 }
 
 .about-focus {
@@ -49,13 +49,13 @@
   display: flex;
   gap: 18px;
   padding: 14px 0;
-  border-top: 1px solid var(--line);
+  border-top: 1px solid var(--color-line);
   font-size: 17px;
 }
 .about-focus li .mono {
   padding-top: 3px;
   font-size: 12px;
-  color: var(--accent-ink);
+  color: var(--color-accent-ink);
 }
 
 .about-facts {
@@ -70,11 +70,11 @@
   justify-content: space-between;
   gap: 16px;
   padding: 14px 0;
-  border-top: 1px solid var(--line);
+  border-top: 1px solid var(--color-line);
 }
 .about-facts dt {
   font-size: 12px;
-  color: var(--ink-3);
+  color: var(--color-ink-3);
 }
 .about-facts dd {
   text-align: right;
@@ -84,7 +84,7 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  color: var(--live-ink);
+  color: var(--color-live-ink);
 }
 
 @media (max-width: 1080px) and (min-width: 901px) {

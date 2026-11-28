@@ -1,5 +1,12 @@
-/* Order matters: tokens → base → layout → sections → overlays → print. */
-@import './tokens.css';
+/*
+ * Tailwind v4 without Preflight: the site keeps its own small reset in base.css, because Preflight's
+ * broader one would restyle form controls and headings.
+ */
+@layer theme, base, components, utilities;
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities);
+
+@import './theme.css';
 @import './base.css';
 @import './layout.css';
 @import './hero.css';
