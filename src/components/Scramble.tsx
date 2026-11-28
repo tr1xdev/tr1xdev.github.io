@@ -1,4 +1,5 @@
 import { useScramble } from '../hooks'
+import { cn } from '../ui'
 
 /**
  * Text that decodes from random glyphs.
@@ -10,7 +11,7 @@ import { useScramble } from '../hooks'
 export function Scramble({ text, play = true, className }: { text: string; play?: boolean; className?: string }) {
   const out = useScramble(text, play)
   return (
-    <span className={['scramble', className].filter(Boolean).join(' ')} data-live={out === text ? undefined : out}>
+    <span className={cn('scramble relative inline-block whitespace-nowrap', className)} data-live={out === text ? undefined : out}>
       {text}
     </span>
   )

@@ -104,3 +104,17 @@
     aspect-ratio: auto;
   }
 }
+
+.bento {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 16px;
+}
+@media (max-width: 900px) {
+  .bento {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .bento > * {
+    grid-column: auto !important;
+  }
+}

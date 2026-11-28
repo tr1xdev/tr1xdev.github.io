@@ -200,3 +200,18 @@
     display: none;
   }
 }
+
+.link-more {
+  display: inline-block;
+  margin-top: 28px;
+  font-size: 13px;
+  color: var(--color-ink-2);
+  border-bottom: 1px solid var(--color-line-2);
+  transition:
+    color 0.2s,
+    border-color 0.2s;
+}
+.link-more:hover {
+  color: var(--color-ink);
+  border-color: var(--color-accent);
+}

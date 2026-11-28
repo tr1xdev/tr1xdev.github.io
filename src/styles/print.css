@@ -15,14 +15,9 @@
   body {
     padding: 0;
   }
-  .dither-bg,
-  .topbar,
-  .statusbar,
   .ticker,
   .hero-actions,
   .contact-art,
-  .toast,
-  .skip,
   .hero::before {
     display: none !important;
   }
@@ -45,8 +40,5 @@
   .can-reveal [data-reveal]:not(.is-in) {
     opacity: 1;
     transform: none;
-  }
-  .sec {
-    padding-top: 40px;
   }
 }

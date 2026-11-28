@@ -14,6 +14,7 @@ import { Stats } from './components/Stats'
 import { StatusBar } from './components/StatusBar'
 import { Work } from './components/Work'
 import { isMac, prefersReducedMotion, useActiveSection, useRevealOnScroll } from './hooks'
+import { cn } from './ui'
 
 const ids = sections.map((s) => s.id)
 
@@ -94,13 +95,16 @@ export default function App() {
   return (
     <>
       <DitherBackground />
-      <a className="skip" href="#about">
+      <a
+        className="fixed top-3 left-3 z-100 -translate-y-[200%] rounded-control bg-accent px-4 py-2.5 font-semibold text-on-accent focus:translate-y-0 print:hidden"
+        href="#about"
+      >
         Skip to content
       </a>
 
       <Nav active={active} onGo={go} onPalette={() => setPalette(true)} />
 
-      <main>
+      <main className="relative z-1">
         <Hero onGo={go} />
 
         <Section id="about" no="01" title="About" kicker="who’s behind the handle">
@@ -125,13 +129,13 @@ export default function App() {
 
         <Section id="contact" no="06" title="Contact" kicker="let’s talk">
           <Contact onCopy={copy} />
-          <p className="colophon mono">
+          <p className="flex flex-wrap gap-x-7 gap-y-2 pt-14 pb-10 font-mono text-[12px] text-ink-3">
             <span>© {new Date().getFullYear()} {profile.handle}</span>
             <span>react + typescript + webgl</span>
-            <a href={`${profile.links.github}/${profile.githubUser}.github.io`} target="_blank" rel="noreferrer">
+            <a className="hover:text-ink" href={`${profile.links.github}/${profile.githubUser}.github.io`} target="_blank" rel="noreferrer">
               source on github ↗
             </a>
-            <span className="colophon-kbd">
+            <span className="ml-auto sm-down:hidden">
               press <kbd>{isMac ? '⌘K' : 'Ctrl K'}</kbd>
             </span>
           </p>
@@ -140,7 +144,15 @@ export default function App() {
 
       <StatusBar section={current ? `${current.no} ${current.label.toLowerCase()}` : '00 top'} onPalette={() => setPalette(true)} />
       <CommandPalette open={palette} onClose={() => setPalette(false)} commands={commands} />
-      <div className={`toast mono${toast ? ' is-on' : ''}`} role="status" aria-live="polite">
+      <div
+        className={cn(
+          'pointer-events-none fixed bottom-[calc(var(--bar)+16px)] left-1/2 z-60 -translate-x-1/2 rounded-pill bg-accent px-4 py-2.5 font-mono text-[13px] font-semibold text-on-accent',
+          '[transition:opacity_0.2s,translate_0.2s_var(--ease-smooth)] print:hidden',
+          toast ? 'translate-y-0 opacity-100' : 'translate-y-3 opacity-0',
+        )}
+        role="status"
+        aria-live="polite"
+      >
         {toast}
       </div>
     </>
