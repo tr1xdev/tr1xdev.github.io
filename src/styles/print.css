@@ -15,27 +15,6 @@
   body {
     padding: 0;
   }
-  .ticker,
-  .hero-actions,
-  .hero::before {
-    display: none !important;
-  }
-  .hero {
-    min-height: 0;
-  }
-  .hero-name {
-    font-size: 96px;
-  }
-  .hero-name-dim {
-    -webkit-text-stroke-color: #999;
-  }
-  .card,
-  .wk > a,
-  .term {
-    background: #fff !important;
-    box-shadow: none !important;
-    break-inside: avoid;
-  }
   .can-reveal [data-reveal]:not(.is-in) {
     opacity: 1;
     transform: none;

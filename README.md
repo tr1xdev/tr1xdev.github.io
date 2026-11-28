@@ -5,9 +5,8 @@ Live at **https://tr1xdev.github.io**.
 
 ![Desktop preview: dithered hero with the tr1xdev wordmark](docs/preview-desktop.png)
 
-A dark, dithered site built with React 19, TypeScript and Vite. No UI framework, no animation library:
-the background is one small WebGL shader, the project covers are drawn on tiny canvases, everything
-else is plain CSS.
+A dark, dithered site built with React 19, TypeScript, Vite and Tailwind CSS v4. The background uses
+one small WebGL shader and the project covers are drawn on tiny canvases.
 
 ## What's inside
 
@@ -59,7 +58,7 @@ hero line, the About rows and the status bar item that would have shown it.
 This site shows Moscow because that is where its author lives, not because the layout needs a city.
 If you fork it, set your own zone and city, or clear them.
 
-Colours live in [`src/styles/tokens.css`](src/styles/tokens.css) and, for the dither, in
+Colours live in [`src/styles/theme.css`](src/styles/theme.css) and, for the dither, in
 [`src/dither/palette.ts`](src/dither/palette.ts).
 
 ## Reusing the dither
@@ -103,7 +102,8 @@ src/
   data/profile.ts    all content
   github.ts          GitHub API hooks with session cache
   hooks.ts           reduced motion, in-view, reveal, scramble, clock
-  styles/            tokens, base, layout and one stylesheet per section
+  ui.ts              shared Tailwind utility strings
+  styles/            theme, base, keyframes and print styles
 ```
 
 ## Deploy
