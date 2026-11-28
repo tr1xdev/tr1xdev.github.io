@@ -2,6 +2,10 @@ import { useEffect, useRef, useState } from 'react'
 import { useReducedMotion } from '../hooks'
 import { createDitherField } from './field'
 import { BACKGROUND_PALETTE } from './palette'
+import { cn } from '../ui'
+
+/** Fixed full-viewport layer behind the page, drawn with crisp pixels. */
+const layer = 'pointer-events-none fixed inset-0 z-0 h-lvh w-full [image-rendering:pixelated] print:hidden'
 
 /**
  * Fixed, full-viewport dithered backdrop. Reacts to the pointer and to scrolling,
@@ -65,8 +69,8 @@ export function DitherBackground() {
   }, [reduced])
 
   return supported ? (
-    <canvas ref={ref} className="dither-bg" aria-hidden="true" />
+    <canvas ref={ref} className={layer} aria-hidden="true" />
   ) : (
-    <div className="dither-bg dither-bg--static" aria-hidden="true" />
+    <div className={cn(layer, 'opacity-55 [background:radial-gradient(#34343b_1px,transparent_1.4px)_0_0/6px_6px]')} aria-hidden="true" />
   )
 }

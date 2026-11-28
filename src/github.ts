@@ -150,7 +150,7 @@ export function useLanguages(): LangState {
 
 export type MixRow = { name: string; value: number; share: number; color: string }
 
-const PALETTE = ['var(--accent)', 'var(--g-arch)', 'var(--g-data)', 'var(--g-infra)', '#d8b45a']
+const PALETTE = ['var(--color-accent)', 'var(--color-g-arch)', 'var(--color-g-data)', 'var(--color-g-infra)', '#d8b45a']
 
 /** Top languages as shares of the total, the long tail folded into "Other". */
 export function mix(total: LangBytes, top = 5): MixRow[] {
@@ -159,7 +159,7 @@ export function mix(total: LangBytes, top = 5): MixRow[] {
   if (!all) return []
   const rows = entries.slice(0, top).map(([name, value], i) => ({ name, value, share: value / all, color: PALETTE[i] }))
   const rest = entries.slice(top).reduce((a, [, v]) => a + v, 0)
-  if (rest > 0) rows.push({ name: 'Other', value: rest, share: rest / all, color: 'var(--ink-3)' })
+  if (rest > 0) rows.push({ name: 'Other', value: rest, share: rest / all, color: 'var(--color-ink-3)' })
   return rows
 }
 

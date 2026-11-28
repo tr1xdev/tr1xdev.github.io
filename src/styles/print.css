@@ -1,11 +1,11 @@
 @media print {
   :root {
-    --ink: #111;
-    --ink-2: #333;
-    --ink-3: #666;
-    --line: #ddd;
-    --line-2: #ccc;
-    --surface: #fff;
+    --color-ink: #111;
+    --color-ink-2: #333;
+    --color-ink-3: #666;
+    --color-line: #ddd;
+    --color-line-2: #ccc;
+    --color-surface: #fff;
   }
   html,
   body {
@@ -15,38 +15,8 @@
   body {
     padding: 0;
   }
-  .dither-bg,
-  .topbar,
-  .statusbar,
-  .ticker,
-  .hero-actions,
-  .contact-art,
-  .toast,
-  .skip,
-  .hero::before {
-    display: none !important;
-  }
-  .hero {
-    min-height: 0;
-  }
-  .hero-name {
-    font-size: 96px;
-  }
-  .hero-name-dim {
-    -webkit-text-stroke-color: #999;
-  }
-  .card,
-  .wk > a,
-  .term {
-    background: #fff !important;
-    box-shadow: none !important;
-    break-inside: avoid;
-  }
   .can-reveal [data-reveal]:not(.is-in) {
     opacity: 1;
     transform: none;
-  }
-  .sec {
-    padding-top: 40px;
   }
 }

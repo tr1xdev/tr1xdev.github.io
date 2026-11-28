@@ -1,0 +1,87 @@
+/*
+ * Design tokens as a Tailwind v4 theme. Each token becomes a CSS variable and a set of utilities
+ * (--color-ink → text-ink, bg-ink, border-ink …). The dither palettes in src/dither/palette.ts use
+ * the same colours.
+ *
+ * The default colour, type, radius and breakpoint scales are cleared so only the site's own
+ * values exist. The spacing unit is 4px rather than 0.25rem so every length stays in px, as before.
+ */
+@theme static {
+  --color-*: initial;
+  --text-*: initial;
+  --radius-*: initial;
+  --breakpoint-*: initial;
+
+  --spacing: 4px;
+  --default-transition-timing-function: ease;
+
+  --color-bg: #0a0a0b;
+  --color-surface: rgba(14, 14, 17, 0.84);
+  --color-surface-solid: #0f0f12;
+  --color-surface-2: #17171b;
+  --color-line: rgba(242, 240, 235, 0.08);
+  --color-line-2: rgba(242, 240, 235, 0.14);
+  --color-line-3: rgba(242, 240, 235, 0.28);
+
+  --color-ink: #f2f0eb;
+  --color-ink-2: #aeaca6;
+  --color-ink-3: #75746f;
+
+  --color-accent: #ff5a1f;
+  --color-accent-hover: #ff6f3c;
+  --color-accent-ink: #ff8552; /* accent for small text, AA on bg */
+  --color-on-accent: #140a05;
+  --color-live: #3ddc84;
+  --color-live-ink: #8ff0b9;
+
+  /* Stack groups. Components read the active one through --g (see the g-* utilities below). */
+  --color-g-lang: var(--color-accent);
+  --color-g-arch: #7aa2ff;
+  --color-g-data: #4fd1a5;
+  --color-g-infra: #c58cff;
+
+  --font-sans: 'Geist Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'Geist Mono Variable', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+  --font-mono--font-feature-settings: 'zero' 1;
+
+  --radius-card: 16px;
+  --radius-control: 10px;
+  --radius-pill: 999px;
+
+  --ease-smooth: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Desktop-first breakpoints, matching the original max-width media queries exactly. */
+@custom-variant lg-down (@media (max-width: 1080px));
+@custom-variant md-down (@media (max-width: 900px));
+@custom-variant md-up (@media (min-width: 901px));
+@custom-variant sm-down (@media (max-width: 640px));
+@custom-variant xs-down (@media (max-width: 520px));
+@custom-variant 2xs-down (@media (max-width: 420px));
+
+/* Tailwind v4 only applies hover on devices that can hover. Keep plain :hover, as the site had. */
+@custom-variant hover (&:hover);
+
+@utility g-lang {
+  --g: var(--color-g-lang);
+}
+@utility g-arch {
+  --g: var(--color-g-arch);
+}
+@utility g-data {
+  --g: var(--color-g-data);
+}
+@utility g-infra {
+  --g: var(--color-g-infra);
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+
+    --wrap: 1240px;
+    --gutter: clamp(20px, 4vw, 40px);
+    --topbar: 64px;
+    --bar: 32px;
+  }
+}
