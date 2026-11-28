@@ -1,60 +1,106 @@
-/* Editorial layout: statement and artwork on top, two ruled lists underneath. No cards. */
-.about {
-  display: grid;
-  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-  gap: clamp(40px, 5vw, 72px) clamp(32px, 5vw, 72px);
-}
-.about-text {
+.about-statement {
+  grid-column: span 8;
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  justify-content: space-between;
+  gap: 32px;
+  padding: clamp(24px, 3vw, 40px);
 }
 .about-big {
-  font-size: clamp(28px, 3.4vw, 46px);
+  font-size: clamp(26px, 3.1vw, 42px);
   font-weight: 500;
-  line-height: 1.08;
-  letter-spacing: -0.02em;
+  line-height: 1.1;
+  letter-spacing: -0.035em;
   text-wrap: balance;
 }
 .about-body {
-  max-width: 600px;
-  font-size: 17px;
+  max-width: 620px;
   color: var(--ink-2);
 }
 
 .about-visual {
-  position: relative;
-  align-self: start;
+  grid-column: span 4;
   overflow: hidden;
-  border: 1px solid var(--line-2);
   background: #0d0d10;
 }
+.about-visual .dither-canvas {
+  aspect-ratio: 1;
+}
+.about-visual figcaption {
+  position: absolute;
+  inset: auto 0 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 16px;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
 
-.rule-list > * {
+.about-focus {
+  grid-column: span 7;
+  padding: 24px clamp(24px, 3vw, 32px) 12px;
+}
+.about-focus ol {
+  margin-top: 12px;
+}
+.about-focus li {
+  display: flex;
+  gap: 18px;
   padding: 14px 0;
-  border-top: 1px solid var(--line-2);
+  border-top: 1px solid var(--line);
   font-size: 17px;
 }
-.rule-list > :last-child {
-  border-bottom: 1px solid var(--line-2);
+.about-focus li .mono {
+  padding-top: 3px;
+  font-size: 12px;
+  color: var(--accent-ink);
 }
-.facts > div {
+
+.about-facts {
+  grid-column: span 5;
+  padding: 24px clamp(24px, 3vw, 32px);
+}
+.about-facts dl {
+  margin-top: 12px;
+}
+.about-facts dl > div {
   display: flex;
   justify-content: space-between;
   gap: 16px;
+  padding: 14px 0;
+  border-top: 1px solid var(--line);
 }
-.facts dt {
+.about-facts dt {
+  font-size: 12px;
   color: var(--ink-3);
 }
-.facts dd {
+.about-facts dd {
   text-align: right;
+  font-weight: 500;
+}
+.dd-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--live-ink);
 }
 
-@media (max-width: 900px) {
-  .about {
-    grid-template-columns: minmax(0, 1fr);
+@media (max-width: 1080px) and (min-width: 901px) {
+  .about-statement {
+    grid-column: span 7;
   }
   .about-visual {
-    max-width: 420px;
+    grid-column: span 5;
+  }
+  .about-focus,
+  .about-facts {
+    grid-column: span 6;
+  }
+}
+@media (max-width: 900px) {
+  .about-visual .dither-canvas {
+    aspect-ratio: auto;
   }
 }

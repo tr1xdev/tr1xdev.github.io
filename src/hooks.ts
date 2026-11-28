@@ -36,6 +36,80 @@ export function useInView<T extends Element>({ rootMargin = '0px 0px -15% 0px', 
   return [ref, inView] as const
 }
 
+/**
+ * Fades in every `[data-reveal]` element the first time it scrolls into view.
+ * Elements rendered later (e.g. after GitHub data arrives) are picked up too.
+ */
+export function useRevealOnScroll() {
+  useEffect(() => {
+    const root = document.documentElement
+    if (!('IntersectionObserver' in window)) return
+    root.classList.add('can-reveal')
+    const reveal = (el: Element) => {
+      el.classList.add('is-in')
+      io.unobserve(el)
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        // Reveal on entry, and anything already above the viewport (e.g. after opening /#contact).
+        for (const e of entries) if (e.isIntersecting || e.boundingClientRect.bottom < 0) reveal(e.target)
+      },
+      { rootMargin: '0px 0px -8% 0px' },
+    )
+    const pending = () => document.querySelectorAll('[data-reveal]:not(.is-in)')
+    const observe = () => pending().forEach((el) => io.observe(el))
+    observe()
+    const mo = new MutationObserver(observe)
+    mo.observe(document.body, { childList: true, subtree: true })
+
+    // A fast jump (End key, scrollbar drag) can carry an element from below the viewport to above it
+    // between two observer checks, which never counts as intersecting. Sweep those up on scroll.
+    let raf = 0
+    const sweep = () => {
+      raf = 0
+      pending().forEach((el) => el.getBoundingClientRect().bottom < 0 && reveal(el))
+    }
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(sweep)
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => {
+      io.disconnect()
+      mo.disconnect()
+      window.removeEventListener('scroll', onScroll)
+      cancelAnimationFrame(raf)
+      root.classList.remove('can-reveal')
+    }
+  }, [])
+}
+
+const GLYPHS = '#%&*+=<>/\\[]{}01_'
+
+/** "Decodes" text from random glyphs, left to right. Returns the final text for reduced motion. */
+export function useScramble(text: string, play: boolean, duration = 650) {
+  const reduced = useReducedMotion()
+  const [out, setOut] = useState(text)
+  useEffect(() => {
+    if (!play || reduced) {
+      setOut(text)
+      return
+    }
+    let raf = 0
+    const start = performance.now()
+    const tick = (now: number) => {
+      const p = Math.min(1, (now - start) / duration)
+      const fixed = Math.floor(p * text.length)
+      let s = text.slice(0, fixed)
+      for (let i = fixed; i < text.length; i++) s += text[i] === ' ' ? ' ' : GLYPHS[(Math.random() * GLYPHS.length) | 0]
+      setOut(s)
+      if (p < 1) raf = requestAnimationFrame(tick)
+    }
+    raf = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(raf)
+  }, [text, play, reduced, duration])
+  return out
+}
+
 export function useActiveSection(ids: readonly string[]) {
   const [active, setActive] = useState<string | null>(null)
   useEffect(() => {
@@ -59,53 +133,25 @@ export function useActiveSection(ids: readonly string[]) {
   return active
 }
 
-/** True when `timeZone` is an IANA zone name this browser knows, e.g. 'Europe/Lisbon'. */
-export function isTimeZone(timeZone: string) {
-  if (!timeZone) return false
-  try {
-    new Intl.DateTimeFormat('en', { timeZone })
-    return true
-  } catch {
-    return false
-  }
-}
-
-/** The offset from UTC in `timeZone` at `at`, e.g. 'UTC+3', 'UTC-4' or 'UTC+5:30'. Empty if unknown. */
-export function utcOffset(timeZone: string, at = new Date()) {
-  if (!isTimeZone(timeZone)) return ''
-  try {
-    const name = new Intl.DateTimeFormat('en-US', { timeZone, timeZoneName: 'shortOffset' })
-      .formatToParts(at)
-      .find((p) => p.type === 'timeZoneName')?.value
-    return name ? name.replace('GMT', 'UTC') : ''
-  } catch {
-    return ''
-  }
-}
-
-/**
- * Local time (HH:MM) and UTC offset in `timeZone`, updated on the minute.
- * Both are empty strings when the zone is empty or unknown.
- */
-export function useClock(timeZone: string) {
-  const valid = isTimeZone(timeZone)
+/** Current time in a given IANA zone, ticking every second. */
+export function useClock(timeZone: string, withSeconds = false) {
   const [now, setNow] = useState(() => new Date())
   useEffect(() => {
-    if (!valid) return
-    let t = 0
-    const next = () => 60_000 - (Date.now() % 60_000) + 50
-    const tick = () => {
-      setNow(new Date())
-      t = window.setTimeout(tick, next())
-    }
-    t = window.setTimeout(tick, next())
-    return () => window.clearTimeout(t)
-  }, [valid])
+    const t = window.setInterval(() => setNow(new Date()), 1000)
+    return () => window.clearInterval(t)
+  }, [])
   const fmt = useMemo(
-    () => (valid ? new Intl.DateTimeFormat('en-GB', { timeZone, hour: '2-digit', minute: '2-digit', hour12: false }) : null),
-    [timeZone, valid],
+    () =>
+      new Intl.DateTimeFormat('en-GB', {
+        timeZone,
+        hour: '2-digit',
+        minute: '2-digit',
+        ...(withSeconds ? { second: '2-digit' } : {}),
+        hour12: false,
+      }),
+    [timeZone, withSeconds],
   )
-  return { time: fmt ? fmt.format(now) : '', offset: valid ? utcOffset(timeZone, now) : '' }
+  return fmt.format(now)
 }
 
 export const isMac = typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.userAgent)

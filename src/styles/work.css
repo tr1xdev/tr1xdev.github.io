@@ -11,11 +11,16 @@
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: var(--surface);
-  transition: border-color 0.2s;
+  transition:
+    border-color 0.3s,
+    transform 0.4s var(--ease),
+    box-shadow 0.4s var(--ease);
 }
 .wk > a:hover,
 .wk > a:focus-visible {
   border-color: var(--line-3);
+  transform: translateY(-3px);
+  box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.9);
 }
 
 .wk-cover {
@@ -23,6 +28,16 @@
   display: block;
   border-bottom: 1px solid var(--line);
   background: #0d0d10;
+}
+.wk-fig {
+  position: absolute;
+  top: 12px;
+  left: 14px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgba(10, 10, 11, 0.7);
+  font-size: 11px;
+  color: var(--ink-2);
 }
 
 .wk-body {
@@ -35,8 +50,10 @@
 .wk-top {
   display: flex;
   gap: 10px;
-  font-size: 12px;
-  color: var(--ink-3);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-ink);
 }
 .wk-flag {
   color: var(--ink-3);
@@ -48,7 +65,7 @@
   font-size: clamp(28px, 2.8vw, 36px);
   font-weight: 600;
   line-height: 1;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.04em;
 }
 .wk-title .arrow {
   font-size: 0.7em;
@@ -108,13 +125,13 @@
   grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
 }
 .wk-lead .wk-cover {
-  min-height: 320px;
   border-bottom: 0;
   border-right: 1px solid var(--line);
 }
-.wk-lead .wk-cover .dither-frame {
-  position: absolute;
-  inset: 0;
+.wk-lead .wk-cover .dither-canvas {
+  height: 100%;
+  min-height: 100%;
+  object-fit: cover;
 }
 .wk-lead .wk-body {
   padding: clamp(24px, 3vw, 36px);
@@ -124,36 +141,6 @@
 }
 .wk-lead .wk-sum {
   font-size: 17px;
-}
-
-/* ── language mix ── */
-.mix {
-  display: grid;
-  gap: 16px;
-  margin-top: 48px;
-}
-.mix-head {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 8px 16px;
-  font-size: 12px;
-  color: var(--ink-3);
-}
-.mix-legend {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 24px;
-}
-.mix-legend li {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
-}
-.mix-legend .mono {
-  color: var(--ink-3);
-  font-size: 12px;
 }
 
 /* ── other repositories ── */
@@ -203,8 +190,6 @@
     display: flex;
   }
   .wk-lead .wk-cover {
-    min-height: 0;
-    aspect-ratio: 16 / 9;
     border-right: 0;
     border-bottom: 1px solid var(--line);
   }

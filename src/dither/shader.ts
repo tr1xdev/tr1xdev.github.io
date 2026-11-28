@@ -1,15 +1,11 @@
 /**
  * Full-screen ordered-dither shader.
  *
- * 1. A large sphere, shaded with a soft key light and a specular highlight. The light drifts
- *    on its own and swings towards the pointer, so the shading follows the mouse.
- * 2. The sphere slowly turns: a low-frequency noise texture is read from the rotated normal,
- *    so there is no seam.
- * 3. Around it, a thin halo and a very faint wave field keep the rest of the page textured.
- * 4. Scrolling lifts the sphere out of view faster than the page (parallax).
- * 5. The brightness is quantised to four palette colours with an 8×8 Bayer matrix, computed
- *    arithmetically so it works on WebGL 1 without textures. Only the specular peak reaches
- *    the accent colour.
+ * 1. A domain-warped fbm noise field drifts slowly over time.
+ * 2. The page scroll position shifts it (parallax) and fades the hero emphasis out.
+ * 3. The pointer adds a soft light.
+ * 4. The result is quantised to four palette colours with an 8×8 Bayer matrix,
+ *    computed arithmetically so it works on WebGL 1 without textures.
  */
 export const VERT = /* glsl */ `
 attribute vec2 aPos;
@@ -23,11 +19,11 @@ precision highp float;
 precision mediump float;
 #endif
 
-uniform vec2 uRes;         // canvas size in dither cells
-uniform float uTime;       // seconds
-uniform vec2 uPointer;     // dither cells, origin bottom-left
-uniform float uPointerAmt; // 0..1, eased in JS
-uniform float uScroll;     // scroll offset in viewport heights
+uniform vec2 uRes;        // canvas size in dither cells
+uniform float uTime;      // seconds
+uniform vec2 uPointer;    // dither cells, origin bottom-left
+uniform float uPointerAmt;// 0..1, eased in JS
+uniform float uScroll;    // scroll offset in viewport heights
 uniform vec3 uC0;
 uniform vec3 uC1;
 uniform vec3 uC2;
@@ -51,57 +47,39 @@ float noise(vec2 p) {
              mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), u.x), u.y);
 }
 
+const mat2 ROT = mat2(0.8, -0.6, 0.6, 0.8);
+
+float fbm(vec2 p) {
+  float v = 0.0;
+  float a = 0.5;
+  for (int i = 0; i < 4; i++) {
+    v += a * noise(p);
+    p = ROT * p * 2.03;
+    a *= 0.5;
+  }
+  return v;
+}
+
 void main() {
   vec2 px = gl_FragCoord.xy;
-  float aspect = uRes.x / uRes.y;
-  vec2 uv = px / uRes.y;            // 0..aspect across, 0..1 up
-  vec2 pointer = uPointer / uRes.y;
-  float t = uTime;
-  float wide = step(1.0, aspect);
+  vec2 uv = px / uRes.y;
+  float t = uTime * 0.05;
 
-  // Placement: right of the wordmark on wide screens, tucked into the top corner on phones.
-  float R = mix(0.2, 0.4, wide);
-  vec2 c = vec2(aspect * mix(0.86, 0.75, wide), mix(0.84, 0.6, wide));
-  c.y += uScroll * 1.15;
+  vec2 p = uv * 1.6 - vec2(0.0, uScroll * 0.5);
+  vec2 q = vec2(fbm(p + vec2(0.0, t)), fbm(p + vec2(5.2, 1.3) - t));
+  vec2 r = vec2(fbm(p + 2.0 * q + vec2(1.7, 9.2) + 0.6 * t), fbm(p + 2.0 * q + vec2(8.3, 2.8) - 0.4 * t));
+  float f = smoothstep(0.3, 0.9, fbm(p + 2.2 * r));
 
-  vec2 d = (uv - c) / R;
-  float r2 = dot(d, d);
-  float f;
+  // Bright on the right while the hero is on screen (the text sits on the left), calm afterwards.
+  float hero = 1.0 - smoothstep(0.2, 1.1, uScroll);
+  float side = smoothstep(0.1, 0.95, px.x / uRes.x);
+  f *= mix(0.55, mix(0.45, 1.15, side), hero);
 
-  if (r2 < 1.0) {
-    vec3 n = vec3(d, sqrt(1.0 - r2));
+  float d = distance(uv, uPointer / uRes.y);
+  f += uPointerAmt * mix(0.35, 0.7, hero) * exp(-d * d * 14.0);
 
-    // Key light from the upper right, drifting slowly; the pointer pulls it towards itself.
-    float a = 0.35 * sin(t * 0.13);
-    vec3 key = normalize(vec3(0.55 * cos(a) + 0.2 * sin(a), 0.5, 0.65));
-    vec3 toPointer = normalize(vec3((pointer - c) / R * 0.9, 0.8));
-    vec3 L = normalize(mix(key, toPointer, 0.8 * uPointerAmt));
-
-    // Slow rotation about the vertical axis; texture from the rotated normal has no seam.
-    float s = sin(t * 0.06);
-    float k = cos(t * 0.06);
-    vec3 m = vec3(k * n.x + s * n.z, n.y, -s * n.x + k * n.z);
-    float tex = 0.78 + 0.34 * noise(m.xy * 2.4 + m.z * 1.7) + 0.12 * noise(m.yz * 6.0 + 3.1);
-
-    float diffuse = clamp((dot(n, L) + 0.2) / 1.2, 0.0, 1.0);
-    vec3 h = normalize(L + vec3(0.0, 0.0, 1.0));
-    float spec = pow(max(dot(n, h), 0.0), 48.0);
-    float rim = pow(1.0 - n.z, 4.0) * 0.12;
-
-    // Diffuse tops out around level 2 (light grey); only the specular peak reaches the accent.
-    f = 0.02 + 0.64 * pow(diffuse, 1.25) * tex + 0.6 * spec + rim;
-  } else {
-    float r = sqrt(r2);
-    float halo = 0.2 * exp(-(r - 1.0) * 9.0);
-    float waves = 0.1 + 0.07 * sin(uv.x * 2.6 + uv.y * 1.4 + t * 0.12) * sin(uv.y * 3.1 - t * 0.09);
-    float glow = uPointerAmt * 0.2 * exp(-dot(uv - pointer, uv - pointer) * 18.0);
-    f = halo + waves + glow;
-  }
-
-  // Keep the left side calm where the hero copy sits, and the whole field quieter on phones.
-  float hero = 1.0 - smoothstep(0.3, 1.0, uScroll);
-  f *= mix(1.0, mix(0.45, 1.0, smoothstep(0.15, 0.75, px.x / uRes.x)), hero * wide);
-  f *= mix(0.8, 1.0, wide);
+  vec2 c = px / uRes - 0.5;
+  f *= 1.0 - 0.6 * dot(c, c);
 
   float idx = floor(clamp(f, 0.0, 1.0) * 3.0 + bayer8(px));
   vec3 col = idx < 0.5 ? uC0 : idx < 1.5 ? uC1 : idx < 2.5 ? uC2 : uC3;

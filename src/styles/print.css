@@ -17,10 +17,13 @@
   }
   .dither-bg,
   .topbar,
+  .statusbar,
+  .ticker,
   .hero-actions,
   .contact-art,
   .toast,
-  .skip {
+  .skip,
+  .hero::before {
     display: none !important;
   }
   .hero {
@@ -34,10 +37,14 @@
   }
   .card,
   .wk > a,
-  .step-run {
+  .term {
     background: #fff !important;
     box-shadow: none !important;
     break-inside: avoid;
+  }
+  .can-reveal [data-reveal]:not(.is-in) {
+    opacity: 1;
+    transform: none;
   }
   .sec {
     padding-top: 40px;

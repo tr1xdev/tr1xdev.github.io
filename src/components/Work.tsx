@@ -38,7 +38,7 @@ function ProjectCard({ project, repo, index, loading }: { project: Featured; rep
   const href = repo?.html_url ?? `${profile.links.github}/${project.repo}`
 
   return (
-    <li className={`wk${lead ? ' wk-lead' : ''}`}>
+    <li className={`wk${lead ? ' wk-lead' : ''}`} data-reveal>
       <a
         href={href}
         target="_blank"
@@ -49,7 +49,8 @@ function ProjectCard({ project, repo, index, loading }: { project: Featured; rep
         onBlur={() => setActive(false)}
       >
         <span className="wk-cover">
-          <DitherCanvas field={patterns[project.cover]} fill={lead} play={active} startAt={index * 3 + 1} />
+          <DitherCanvas field={patterns[project.cover]} width={lead ? 200 : 160} height={lead ? 120 : 90} play={active} startAt={index * 3 + 1} />
+          <span className="wk-fig mono">fig. {String(index + 1).padStart(2, '0')}</span>
         </span>
         <span className="wk-body">
           <span className="wk-top mono">
@@ -81,47 +82,6 @@ function ProjectCard({ project, repo, index, loading }: { project: Featured; rep
   )
 }
 
-/** Bytes of code per language across every public repository, from GitHub linguist. */
-function LanguageMix() {
-  const langs = useLanguages()
-  const rows = langs.status === 'ok' ? mix(langs.total) : []
-  const basis = langs.status === 'ok' && langs.basis === 'repos' ? 'by repository (API limit)' : 'by bytes of code'
-  return (
-    <figure className="mix">
-      <figcaption className="mix-head mono">
-        <span>Language mix, all public repositories</span>
-        <span>{basis}</span>
-      </figcaption>
-      <div
-        className={`lang-bar lang-bar-lg${rows.length ? '' : ' is-empty'}`}
-        role="img"
-        aria-label={rows.length ? 'Language mix: ' + rows.map((r) => `${r.name} ${pct(r.share)}`).join(', ') : 'Language mix unavailable'}
-      >
-        {rows.map((r) => (
-          <span key={r.name} style={{ flexGrow: r.value, background: r.color }} />
-        ))}
-      </div>
-      <ul className="mix-legend">
-        {rows.length > 0 ? (
-          rows.map((r) => (
-            <li key={r.name}>
-              <span className="swatch" style={{ background: r.color }} aria-hidden="true" />
-              <span>{r.name}</span>
-              <span className="mono">{pct(r.share)}</span>
-            </li>
-          ))
-        ) : (
-          <li className="mono muted">{langs.status === 'error' ? 'GitHub API unavailable right now' : 'measuring…'}</li>
-        )}
-      </ul>
-      <p className="note mono">
-        Public, non-fork repositories of @{profile.githubUser}, this site excluded. GitHub counts bytes, so markup and styles count
-        too. Private work is not included.
-      </p>
-    </figure>
-  )
-}
-
 export function Work() {
   const state = useRepos()
   const repos = state.status === 'ok' ? state.repos : []
@@ -138,8 +98,8 @@ export function Work() {
       </ol>
 
       {more.length > 0 && (
-        <div className="wk-more">
-          <h3 className="label mono">More repositories</h3>
+        <div className="wk-more" data-reveal>
+          <h3 className="card-label mono">More repositories</h3>
           <ul className="repo-list">
             {more.slice(0, MORE_LIMIT).map((r) => (
               <li key={r.name}>
@@ -158,8 +118,6 @@ export function Work() {
           </ul>
         </div>
       )}
-
-      <LanguageMix />
 
       {state.status === 'error' && (
         <p className="note mono">GitHub API is not answering (rate limit or offline). Live stats will appear on the next visit.</p>

@@ -39,6 +39,7 @@ export function Nav({ active, onGo, onPalette }: Props) {
         go(s.id)
       }}
     >
+      <span className="nav-no">{s.no}</span>
       {s.label}
     </a>
   ))
@@ -56,8 +57,7 @@ export function Nav({ active, onGo, onPalette }: Props) {
         >
           <span className="brand-mark" aria-hidden="true" />
           <span className="brand-name">
-            {profile.wordmark[0]}
-            {profile.wordmark[1] && <span>/{profile.wordmark[1]}</span>}
+            tr1x<span>/dev</span>
           </span>
         </a>
         <nav className="nav mono" aria-label="Sections">
@@ -75,7 +75,7 @@ export function Nav({ active, onGo, onPalette }: Props) {
               go('contact')
             }}
           >
-            Contact
+            Hire me
           </a>
           <button
             type="button"

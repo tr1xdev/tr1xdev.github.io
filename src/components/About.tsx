@@ -3,10 +3,10 @@ import { about, profile } from '../data/profile'
 import { DitherCanvas } from '../dither/DitherCanvas'
 import { imageField, orb } from '../dither/patterns'
 import type { Field } from '../dither/paint'
-import { useClock, useInView } from '../hooks'
+import { useInView } from '../hooks'
 
-/** Resolution the portrait is sampled at before dithering. */
-const SAMPLE = 200
+const W = 120
+const H = 120
 
 /** The optional portrait from profile.ts, dithered; the generated orb until it loads (or if it fails). */
 function usePortraitField(): Field {
@@ -15,7 +15,7 @@ function usePortraitField(): Field {
     if (!profile.portrait) return
     const img = new Image()
     img.decoding = 'async'
-    img.onload = () => setField(() => imageField(img, SAMPLE, SAMPLE))
+    img.onload = () => setField(() => imageField(img, W, H))
     img.src = profile.portrait
   }, [])
   return field
@@ -23,62 +23,67 @@ function usePortraitField(): Field {
 
 export function About() {
   const field = usePortraitField()
-  const { offset } = useClock(profile.timezone)
-  const [ref, inView] = useInView<HTMLDivElement>()
+  const [ref, inView] = useInView<HTMLElement>()
 
   return (
-    <div className="about">
-      <div className="about-text">
+    <div className="bento about">
+      <article className="card about-statement" data-reveal>
         <p className="about-big">{about.statement}</p>
         <p className="about-body">{about.body}</p>
-      </div>
+      </article>
 
-      <div className="about-visual" ref={ref}>
+      <figure className="card about-visual" ref={ref} data-reveal>
         <DitherCanvas
           field={field}
-          aspect={1}
+          width={W}
+          height={H}
           play={inView && !profile.portrait}
           startAt={2}
           label={profile.portrait ? `Portrait of ${profile.handle}` : undefined}
         />
-      </div>
+        <figcaption className="mono">
+          <span>{profile.partNo}</span>
+          <span>systems core</span>
+        </figcaption>
+      </figure>
 
-      <div className="about-col">
-        <h3 className="label mono">Focus</h3>
-        <ul className="rule-list">
-          {about.focus.map((f) => (
-            <li key={f}>{f}</li>
+      <article className="card about-focus" data-reveal>
+        <h3 className="card-label mono">Focus</h3>
+        <ol>
+          {about.focus.map((f, i) => (
+            <li key={f}>
+              <span className="mono">{String(i + 1).padStart(2, '0')}</span>
+              {f}
+            </li>
           ))}
-        </ul>
-      </div>
+        </ol>
+      </article>
 
-      <div className="about-col">
-        <h3 className="label mono">Details</h3>
-        <dl className="rule-list facts">
-          {profile.location && (
-            <div>
-              <dt>Based in</dt>
-              <dd>{profile.location}</dd>
-            </div>
-          )}
-          {offset && (
-            <div>
-              <dt>Time zone</dt>
-              <dd>{offset}</dd>
-            </div>
-          )}
+      <article className="card about-facts" data-reveal>
+        <h3 className="card-label mono">Quick facts</h3>
+        <dl>
           <div>
-            <dt>Role</dt>
+            <dt className="mono">based in</dt>
+            <dd>{profile.location}</dd>
+          </div>
+          <div>
+            <dt className="mono">time zone</dt>
+            <dd>{profile.tzLabel}</dd>
+          </div>
+          <div>
+            <dt className="mono">role</dt>
             <dd>{profile.role}</dd>
           </div>
           {profile.availability && (
             <div>
-              <dt>Status</dt>
-              <dd>{profile.availability}</dd>
+              <dt className="mono">status</dt>
+              <dd className="dd-live">
+                <span className="led" aria-hidden="true" /> {profile.availability}
+              </dd>
             </div>
           )}
         </dl>
-      </div>
+      </article>
     </div>
   )
 }

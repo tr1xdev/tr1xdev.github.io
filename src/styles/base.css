@@ -15,6 +15,7 @@ html.is-locked {
 
 body {
   margin: 0;
+  padding-bottom: var(--bar);
   background: var(--bg);
   color: var(--ink);
   font-family: var(--sans);
@@ -68,6 +69,7 @@ em {
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
+  border-radius: 4px;
 }
 
 .wrap {
@@ -118,7 +120,7 @@ kbd {
   padding: 2px 6px;
   border: 1px solid var(--line-2);
   border-bottom-width: 2px;
-  border-radius: var(--radius-sm);
+  border-radius: 5px;
   font-family: var(--mono);
   font-size: 0.85em;
   line-height: 1.3;
@@ -132,12 +134,7 @@ kbd {
   z-index: 0;
   width: 100%;
   height: 100lvh;
-  overflow: hidden;
   pointer-events: none;
-}
-.dither-bg canvas,
-.dither-frame canvas {
-  display: block;
   image-rendering: crisp-edges;
   image-rendering: pixelated;
 }
@@ -145,12 +142,31 @@ kbd {
   background: radial-gradient(#34343b 1px, transparent 1.4px) 0 0 / 6px 6px;
   opacity: 0.55;
 }
-/* Sized by CSS; the canvas inside is measured to whole device pixels per dither cell. */
-.dither-frame {
-  position: relative;
+.dither-canvas {
   display: block;
   width: 100%;
-  overflow: hidden;
+  height: auto;
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+}
+
+/* ── scramble text: the real text keeps its place, the glyphs are painted on top while it decodes ── */
+.scramble {
+  position: relative;
+  display: inline-block;
+  white-space: nowrap;
+}
+.scramble[data-live] {
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke-color: transparent;
+}
+.scramble[data-live]::after {
+  content: attr(data-live);
+  content: attr(data-live) / '';
+  position: absolute;
+  inset: 0;
+  -webkit-text-fill-color: currentColor;
+  -webkit-text-stroke-color: var(--scramble-stroke, transparent);
 }
 
 /* ── primitives ── */
@@ -160,10 +176,11 @@ kbd {
   border-radius: var(--radius);
   background: var(--surface);
 }
-.label {
-  margin-bottom: 12px;
-  font-size: 12px;
-  font-weight: 400;
+.card-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   color: var(--ink-3);
 }
 
@@ -175,7 +192,7 @@ kbd {
   height: 46px;
   padding: 0 20px;
   border: 1px solid transparent;
-  border-radius: var(--radius-sm);
+  border-radius: 999px;
   font-size: 15px;
   font-weight: 500;
   white-space: nowrap;
@@ -184,6 +201,7 @@ kbd {
     background 0.2s,
     border-color 0.2s,
     color 0.2s,
+    box-shadow 0.2s,
     transform 0.2s var(--ease);
 }
 .btn:active {
@@ -195,6 +213,7 @@ kbd {
 }
 .btn-primary:hover {
   background: var(--accent-hover);
+  box-shadow: 0 0 0 4px rgba(255, 90, 31, 0.18);
 }
 .btn-ghost {
   border-color: var(--line-2);
@@ -210,6 +229,41 @@ kbd {
   font-size: 14px;
 }
 
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 30px;
+  padding: 0 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+.pill-live {
+  border: 1px solid rgba(61, 220, 132, 0.32);
+  background: rgba(61, 220, 132, 0.08);
+  color: var(--live-ink);
+}
+
+.led {
+  flex: none;
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--live);
+  box-shadow: 0 0 0 0 rgba(61, 220, 132, 0.6);
+  animation: pulse 2.4s ease-out infinite;
+}
+@keyframes pulse {
+  70% {
+    box-shadow: 0 0 0 7px rgba(61, 220, 132, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(61, 220, 132, 0);
+  }
+}
+
 .chips {
   display: flex;
   flex-wrap: wrap;
@@ -218,7 +272,7 @@ kbd {
 .chips span {
   padding: 3px 10px;
   border: 1px solid var(--line-2);
-  border-radius: var(--radius-sm);
+  border-radius: 999px;
   font-size: 12px;
   color: var(--ink-2);
 }
@@ -240,6 +294,11 @@ kbd {
 
 .arrow {
   display: inline-block;
+  transition: transform 0.25s var(--ease);
+}
+a:hover .arrow,
+a:focus-visible .arrow {
+  transform: translate(3px, -3px);
 }
 
 /* Language bars: flat colour with a dot screen on top, so they read as dithered too. */
@@ -265,7 +324,18 @@ kbd {
 }
 .lang-bar-lg {
   height: 16px;
-  border-radius: var(--radius-sm);
+  border-radius: 3px;
+}
+
+/* ── reveal on scroll (only when JS has opted in) ── */
+[data-reveal] {
+  transition:
+    opacity 0.8s var(--ease),
+    transform 0.8s var(--ease);
+}
+.can-reveal [data-reveal]:not(.is-in) {
+  opacity: 0;
+  transform: translateY(20px);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -276,5 +346,8 @@ kbd {
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
+  }
+  .can-reveal [data-reveal]:not(.is-in) {
+    transform: none;
   }
 }
