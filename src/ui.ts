@@ -21,11 +21,11 @@ export const surface = 'bg-surface'
 export const cardLabel = 'font-mono text-[11px] font-medium uppercase tracking-[0.14em] text-ink-3'
 
 const buttonBase =
-  'inline-flex cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-pill border border-transparent font-medium ' +
+  'inline-flex cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-pill border font-medium ' +
   '[transition:background_0.2s,border-color_0.2s,color_0.2s,box-shadow_0.2s,translate_0.2s_var(--ease-smooth)] active:translate-y-px'
 
 const buttonVariant = {
-  primary: 'bg-accent text-on-accent hover:bg-accent-hover hover:shadow-[0_0_0_4px_rgba(255,90,31,0.18)]',
+  primary: 'border-transparent bg-accent text-on-accent hover:bg-accent-hover hover:shadow-[0_0_0_4px_rgba(255,90,31,0.18)]',
   ghost: 'border-line-2 bg-[rgba(10,10,11,0.55)] text-ink hover:border-ink',
 }
 
